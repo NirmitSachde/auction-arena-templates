@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Auction Arena · 06 Prime Broadcast</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;500;600;700&family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/base.css">
+<style>
+/* 06 Prime Broadcast: IPL-style TV package. Navy and gold slashes, stacked lower-thirds, LIVE chip, sponsor bug. */
+:root {
+  --navy: #07123a;
+  --navy2: #0d1f5c;
+  --royal: #1a3a9e;
+  --gold: #f7c948;
+  --gold2: #e09b12;
+  --ink: #ffffff;
+  --mute: #b7c3ea;
+  --goldgrad: linear-gradient(100deg, #fff1b8, #f7c948 35%, #e09b12 70%, #ffd66b);
+}
+.aa-stage {
+  font-family: Inter, system-ui, sans-serif; color: var(--ink);
+  background:
+    linear-gradient(115deg, transparent 0 38%, rgba(247,201,72,.95) 38% 38.6%, transparent 38.6% 40.2%, rgba(247,201,72,.35) 40.2% 40.5%, transparent 40.5%),
+    linear-gradient(115deg, transparent 0 20%, rgba(26,58,158,.55) 20% 44%, transparent 44%),
+    repeating-linear-gradient(115deg, rgba(255,255,255,.025) 0 2px, transparent 2px 26px),
+    radial-gradient(ellipse 70% 90% at 22% 55%, #1f3fae, transparent 70%),
+    radial-gradient(ellipse 60% 60% at 90% 10%, #14286e, transparent 70%),
+    linear-gradient(180deg, #0a1850, var(--navy) 60%, #040a24);
+}
+.aa-stage [data-bind].blk { display: block; }
+/* Light sweep across the slashes */
+.aa-stage::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,.08) 48%, transparent 56%);
+  background-size: 300% 100%; animation: sweep 8s linear infinite;
+}
+@keyframes sweep { from { background-position: 150% 0; } to { background-position: -150% 0; } }
+
+/* Top bugs */
+.bug { position: absolute; top: 40px; left: 48px; display: flex; align-items: stretch; height: 92px; z-index: 3; }
+.live { display: flex; align-items: center; gap: 10px; padding: 0 22px; background: #e11d2e; font-family: Oswald, sans-serif; font-weight: 700; font-size: 30px; letter-spacing: 3px; }
+.live::before { content: ""; width: 14px; height: 14px; border-radius: 50%; background: #fff; animation: pulse 1.2s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: .2; } }
+.tourbox { display: flex; align-items: center; gap: 16px; padding: 0 34px 0 18px; background: rgba(4,10,36,.85); border-bottom: 4px solid var(--gold); clip-path: polygon(0 0, 100% 0, calc(100% - 28px) 100%, 0 100%); }
+.tourbox img { width: 72px; height: 72px; object-fit: contain; }
+.tourbox .nm { font-family: Oswald, sans-serif; font-weight: 600; font-size: 30px; text-transform: uppercase; letter-spacing: 1px; line-height: 1.05; }
+.tourbox .ss { font-size: 17px; color: var(--gold); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+.sponbug { position: absolute; top: 40px; right: 48px; height: 92px; display: flex; align-items: center; gap: 18px; padding: 0 16px 0 44px; z-index: 3;
+  background: #fff; color: var(--navy); clip-path: polygon(28px 0, 100% 0, 100% 100%, 0 100%); }
+.sponbug .lb { font-size: 14px; letter-spacing: 3px; text-transform: uppercase; font-weight: 800; color: var(--gold2); text-align: right; }
+.sponbug .nm { font-family: Oswald, sans-serif; font-size: 28px; font-weight: 600; text-transform: uppercase; text-align: right; line-height: 1.05; }
+.sponbug img { height: 76px; width: auto; }
+
+/* Player cut-out on the slash */
+.player { position: absolute; left: 60px; top: 150px; width: 700px; height: 740px; z-index: 1; }
+.player::before { content: ""; position: absolute; left: 90px; right: 90px; bottom: 0; height: 60px; border-radius: 50%; background: radial-gradient(rgba(0,0,0,.6), transparent 70%); }
+.player img { position: relative; width: 100%; height: 100%; object-fit: contain; object-position: center bottom;
+  -webkit-mask: linear-gradient(90deg, transparent 14%, #000 26%, #000 74%, transparent 86%); mask: linear-gradient(90deg, transparent 14%, #000 26%, #000 74%, transparent 86%); filter: drop-shadow(0 0 40px rgba(247,201,72,.25)) drop-shadow(0 30px 40px rgba(0,0,0,.5)); }
+.jersey { position: absolute; left: 36px; top: 170px; font-family: "Bebas Neue", sans-serif; font-size: 380px; line-height: .8; color: transparent; -webkit-text-stroke: 3px rgba(247,201,72,.35); z-index: 0; }
+
+/* Right stack of lower-third bars */
+.stack { position: absolute; left: 800px; right: 48px; top: 168px; z-index: 2; }
+.bar1 { display: inline-flex; align-items: center; gap: 16px; height: 58px; padding: 0 30px; background: var(--royal); font-family: Oswald, sans-serif; font-weight: 500; font-size: 32px; text-transform: uppercase; letter-spacing: 3px; clip-path: polygon(0 0, 100% 0, calc(100% - 20px) 100%, 0 100%); }
+.bar1 .g { background: var(--goldgrad); color: var(--navy); font-weight: 700; padding: 4px 14px; font-size: 26px; letter-spacing: 2px; }
+.bar2 { margin-top: 0; height: 150px; display: flex; align-items: center; padding: 0 44px; background: var(--goldgrad); color: var(--navy); clip-path: polygon(0 0, 100% 0, calc(100% - 44px) 100%, 0 100%); box-shadow: 0 20px 50px rgba(0,0,0,.4); }
+.bar2 .last { font-family: "Bebas Neue", sans-serif; font-size: 168px; line-height: 1; letter-spacing: 2px; padding-top: 18px; white-space: nowrap; }
+.bar3 { display: flex; height: 64px; width: calc(100% - 44px); background: rgba(4,10,36,.9); border-left: 8px solid var(--gold); }
+.bar3 > div { display: flex; align-items: center; gap: 12px; padding: 0 26px; border-right: 1px solid rgba(255,255,255,.12); font-size: 24px; font-weight: 700; white-space: nowrap; }
+.bar3 small { font-size: 15px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); font-weight: 800; }
+.bar3 .style { font-weight: 600; color: var(--mute); font-size: 20px; border-right: 0; }
+
+/* Bid */
+.bidbox { position: absolute; left: 800px; right: 48px; top: 492px; height: 250px; z-index: 2; display: grid; grid-template-columns: 1fr 440px; }
+.bidbox .amtcell { position: relative; display: flex; flex-direction: column; justify-content: center; padding: 0 40px; background: linear-gradient(90deg, rgba(4,10,36,.95), rgba(13,31,92,.92)); border: 3px solid var(--gold); clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); overflow: hidden; }
+.bidbox .amtcell::after { content: ""; position: absolute; top: 0; bottom: 0; width: 200px; left: -240px; background: linear-gradient(100deg, transparent, rgba(247,201,72,.25), transparent); transform: skewX(-20deg); animation: glint 5s ease-in-out infinite; }
+@keyframes glint { 0%, 55% { left: -240px; } 100% { left: 110%; } }
+.bidbox .k { font-family: Oswald, sans-serif; font-size: 26px; letter-spacing: 6px; color: var(--gold); text-transform: uppercase; font-weight: 600; }
+.amt { display: flex; align-items: baseline; gap: 16px; }
+.bid-amt { font-family: "Bebas Neue", sans-serif; font-size: 230px; line-height: .82; letter-spacing: 2px; background: var(--goldgrad); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 6px 0 rgba(0,0,0,.35)); }
+.bid-unit { font-family: "Bebas Neue", sans-serif; font-size: 96px; line-height: .9; color: #fff; }
+.bid-amt.aa-bump { animation: flash .75s cubic-bezier(.2,.9,.3,1.3); }
+@keyframes flash {
+  0% { transform: scale(1); }
+  20% { transform: scale(1.16); filter: drop-shadow(0 0 30px #ffe28a) brightness(1.4); }
+  100% { transform: scale(1); }
+}
+.teamcell { display: grid; grid-template-rows: 1fr auto; background: var(--royal); border: 3px solid var(--gold); border-left: 0; }
+.teamcell .top { display: flex; align-items: center; gap: 20px; padding: 0 26px; }
+.teamcell img { width: 110px; height: 110px; object-fit: contain; flex: none; }
+.teamcell .lb { font-size: 15px; letter-spacing: 3px; text-transform: uppercase; font-weight: 800; color: var(--gold); }
+.teamcell .nm { font-family: Oswald, sans-serif; font-size: 40px; font-weight: 600; text-transform: uppercase; line-height: 1.05; }
+.teamcell .max { display: flex; justify-content: space-between; align-items: center; height: 72px; padding: 0 26px; background: var(--goldgrad); color: var(--navy); }
+.teamcell .max span:first-child { font-size: 18px; letter-spacing: 3px; text-transform: uppercase; font-weight: 800; }
+.teamcell .max .v { font-family: "Bebas Neue", sans-serif; font-size: 54px; line-height: 1; padding-top: 6px; }
+
+/* Stats strip */
+.stats { position: absolute; left: 800px; right: 48px; top: 762px; height: 118px; z-index: 2; display: grid; grid-template-columns: repeat(8, 1fr); background: rgba(4,10,36,.88); border-top: 4px solid var(--gold); }
+.st { display: flex; flex-direction: column; align-items: center; justify-content: center; border-right: 1px solid rgba(255,255,255,.1); animation: slidein .6s cubic-bezier(.2,.8,.2,1) both; animation-delay: calc(var(--i) * 60ms); }
+.st:last-child { border-right: 0; }
+@keyframes slidein { from { opacity: 0; transform: translateY(20px); } }
+.st [data-stat="value"] { font-family: "Bebas Neue", sans-serif; font-size: 56px; line-height: 1; white-space: nowrap; }
+.st [data-stat="label"] { font-size: 14px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); margin-top: 6px; white-space: nowrap; }
+
+/* Bottom lower-third */
+.lt { position: absolute; left: 0; right: 0; bottom: 40px; height: 120px; z-index: 3; display: grid; grid-template-columns: 330px 1fr 280px; }
+.lt .brand { display: flex; align-items: center; justify-content: center; background: var(--goldgrad); clip-path: polygon(0 0, 100% 0, calc(100% - 40px) 100%, 0 100%); }
+.lt .brand img { height: 96px; width: auto; filter: brightness(0) saturate(100%) invert(8%) sepia(60%) saturate(4000%) hue-rotate(225deg); }
+.lt .counts { display: flex; align-items: center; justify-content: center; gap: 0; background: rgba(4,10,36,.92); margin-left: -40px; padding-left: 40px; border-top: 2px solid rgba(247,201,72,.5); border-bottom: 2px solid rgba(247,201,72,.5); }
+.cnt { display: flex; align-items: center; gap: 16px; padding: 0 46px; border-right: 1px solid rgba(255,255,255,.14); }
+.cnt:last-child { border-right: 0; }
+.cnt b { font-family: "Bebas Neue", sans-serif; font-size: 72px; line-height: 1; padding-top: 6px; }
+.cnt span { font-size: 17px; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; color: var(--mute); line-height: 1.2; }
+.cnt.s b { color: #4ade80; }
+.cnt.u b { color: #f87171; }
+.lt .prog { display: flex; flex-direction: column; justify-content: center; gap: 10px; padding: 0 44px 0 30px; background: var(--navy2); border-top: 2px solid rgba(247,201,72,.5); border-bottom: 2px solid rgba(247,201,72,.5); }
+.lt .prog small { font-size: 15px; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); }
+.lt .prog .tr { height: 12px; background: rgba(255,255,255,.14); }
+.lt .prog .tr i { display: block; height: 100%; width: calc(var(--aa-sold-pct, 0) * 1%); background: var(--goldgrad); transition: width .6s; }
+.lt .prog .pp { font-size: 16px; font-weight: 700; color: var(--mute); white-space: nowrap; }
+</style>
+</head>
+<body>
+<div class="aa-stage">
+  <div class="bug">
+    <div class="live">LIVE</div>
+    <div class="tourbox">
+      <img data-src="tournament.logo" alt="">
+      <div><span class="nm blk" data-bind="tournament.name"></span><span class="ss blk" data-bind="tournament.season"></span></div>
+    </div>
+  </div>
+  <div class="sponbug">
+    <div><span class="lb blk" data-bind="sponsor.label"></span><span class="nm blk" data-bind="sponsor.name"></span></div>
+    <img data-src="sponsor.logo" alt="">
+  </div>
+
+  <div class="jersey" data-bind="player.number"></div>
+  <div class="player"><img data-src="player.photo" alt=""></div>
+
+  <section class="stack">
+    <div class="bar1"><span class="g" data-bind="player.grade"></span><span data-bind="player.first"></span></div>
+    <div class="bar2"><span class="last" data-bind="player.last"></span></div>
+    <div class="bar3">
+      <div><small>Role</small><span data-bind="player.role"></span></div>
+      <div><small>Age</small><span data-bind="player.age"></span></div>
+      <div><small>Base</small><span data-bind="player.basePrice"></span></div>
+      <div class="style" data-bind="player.style"></div>
+    </div>
+  </section>
+
+  <section class="bidbox">
+    <div class="amtcell">
+      <div class="k">Current Bid</div>
+      <div class="amt"><span class="bid-amt" data-bind="bid.amount"></span><span class="bid-unit" data-bind="bid.unit"></span></div>
+    </div>
+    <div class="teamcell">
+      <div class="top">
+        <img data-src="team.logo" alt="">
+        <div><span class="lb blk">Bid With</span><span class="nm blk" data-bind="team.name"></span></div>
+      </div>
+      <div class="max"><span>Max Bid</span><span class="v" data-bind="team.maxBid"></span></div>
+    </div>
+  </section>
+
+  <section class="stats" data-stats="player.stats">
+    <template><div class="st"><span data-stat="value"></span><span data-stat="label"></span></div></template>
+  </section>
+
+  <footer class="lt">
+    <div class="brand"><img data-src="brand.logo" alt=""></div>
+    <div class="counts">
+      <div class="cnt"><b data-bind="status.available"></b><span>Players<br>Available</span></div>
+      <div class="cnt s"><b data-bind="status.sold"></b><span>Players<br>Sold</span></div>
+      <div class="cnt u"><b data-bind="status.unsold"></b><span>Players<br>Unsold</span></div>
+    </div>
+    <div class="prog">
+      <small>Auction Progress</small>
+      <div class="tr"><i></i></div>
+      <div class="pp">Purse <span data-bind="team.purse"></span> · Slots <span data-bind="team.slots"></span></div>
+    </div>
+  </footer>
+</div>
+<script src="../shared/data.js"></script><script src="../shared/aa.js"></script>
+</body>
+</html>

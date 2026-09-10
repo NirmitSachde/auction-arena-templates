@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Auction Arena · Templates</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #07080c; --card: #10121a; --line: #1f2330; --text: #eef1f7; --mute: #8a92a6; --acc: #c6ff3d; }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--bg); color: var(--text); font-family: Inter, system-ui, sans-serif; padding: 48px clamp(16px, 4vw, 64px); }
+  header { display: flex; align-items: center; gap: 16px; margin-bottom: 8px; }
+  header img { width: 56px; }
+  h1 { font-size: clamp(24px, 3vw, 36px); font-weight: 800; letter-spacing: -0.02em; }
+  p.sub { color: var(--mute); margin-bottom: 36px; }
+  kbd { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 1px 7px; font-size: 13px; color: var(--text); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 24px; }
+  a.card { display: block; text-decoration: none; color: inherit; background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; transition: transform .2s, border-color .2s; }
+  a.card:hover { transform: translateY(-4px); border-color: var(--acc); }
+  .thumb { aspect-ratio: 16 / 9; background: #000; position: relative; overflow: hidden; }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .thumb span { position: absolute; inset: 0; display: grid; place-items: center; color: var(--mute); font-size: 14px; }
+  .meta { padding: 14px 18px 18px; }
+  .meta b { color: var(--acc); font-size: 13px; margin-right: 8px; }
+  .meta h2 { display: inline; font-size: 17px; }
+  .meta p { color: var(--mute); font-size: 13.5px; margin-top: 6px; line-height: 1.45; }
+</style>
+</head>
+<body>
+<header><img src="assets/auction-arena-logo.svg" alt=""><h1>Auction Arena · Main Display Templates</h1></header>
+<p class="sub">15 broadcast layouts, 1920x1080, all driven by <code>shared/data.js</code>. On any template press <kbd>Space</kbd> to raise the bid, <kbd>T</kbd> to switch team, <kbd>F11</kbd> for fullscreen.</p>
+<div class="grid" id="grid"></div>
+<script>
+  const T = [
+    ["01", "bento-noir", "Bento Noir", "Keynote bento grid, electric lime, hero bid tile."],
+    ["02", "stadium-glass", "Stadium Glass", "Floodlight bokeh behind frosted glass panels."],
+    ["03", "neon-grid", "Neon Grid", "Cyberpunk HUD, perspective grid, cyan and magenta."],
+    ["04", "carbon-pro", "Carbon Pro", "F1 pit wall: carbon fibre, racing red, telemetry."],
+    ["05", "aurora-mesh", "Aurora Mesh", "Pitch-style mesh gradient with soft glass cards."],
+    ["06", "prime-broadcast", "Prime Broadcast", "IPL TV package, navy and gold slashes."],
+    ["07", "editorial", "Editorial", "Magazine cover, giant surname, one hot accent."],
+    ["08", "ultimate-card", "Ultimate Card", "Holographic collectible player card."],
+    ["09", "black-gold", "Black Gold", "Luxury art-deco, gold-foil bid."],
+    ["10", "data-terminal", "Data Terminal", "Swiss grid, Next Gen Stats, signal orange."],
+    ["11", "spotlight", "Spotlight", "Volumetric spotlight on the player."],
+    ["12", "ticker-live", "Ticker Live", "News-channel tickers, split-flap bid."],
+    ["13", "arctic-frost", "Arctic Frost", "Ice-blue glass on deep midnight."],
+    ["14", "velocity", "Velocity", "Speed streaks and a 12° kinetic diagonal."],
+    ["15", "team-takeover", "Team Takeover", "Bidding team's colours flood the screen."]
+  ];
+  document.getElementById("grid").innerHTML = T.map(([n, slug, name, d]) => `
+    <a class="card" href="templates/${n}-${slug}.html">
+      <div class="thumb"><span>Preview</span><img src="screenshots/${n}-${slug}.png" alt="" onerror="this.remove()"></div>
+      <div class="meta"><b>${n}</b><h2>${name}</h2><p>${d}</p></div>
+    </a>`).join("");
+</script>
+</body>
+</html>

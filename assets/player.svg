@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" preserveAspectRatio="xMidYMax slice">
+  <!-- Placeholder cut-out. Replace with a transparent-background PNG of the player for the best look. -->
+  <defs>
+    <linearGradient id="skin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9a77f"/><stop offset="1" stop-color="#b98361"/></linearGradient>
+    <linearGradient id="kit" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f43f5e"/><stop offset=".55" stop-color="#be123c"/><stop offset="1" stop-color="#4c0519"/></linearGradient>
+    <linearGradient id="shade" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#000" stop-opacity=".35"/><stop offset=".5" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".45"/></linearGradient>
+  </defs>
+  <path d="M60 800c8-160 70-250 170-282l70-18 70 18c100 32 162 122 170 282Z" fill="url(#kit)"/>
+  <path d="M230 518 300 600l70-82-16-8-54 50-54-50Z" fill="#fff" opacity=".9"/>
+  <path d="M258 430h84v88l-42 30-42-30Z" fill="url(#skin)"/>
+  <ellipse cx="300" cy="300" rx="110" ry="138" fill="url(#skin)"/>
+  <path d="M190 290c-8-120 60-172 116-172 70 0 128 50 114 170-10-50-40-84-66-92-40 20-100 22-140 6-14 26-22 56-24 88Z" fill="#1f1a17"/>
+  <ellipse cx="300" cy="300" rx="110" ry="138" fill="url(#shade)"/>
+  <text x="300" y="720" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="140" fill="#fff" opacity=".9">17</text></svg>

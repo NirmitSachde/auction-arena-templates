@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Auction Arena · 15 Team Takeover</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/base.css">
+<style>
+/* Team Takeover: the bidding team's colours own the canvas. Override the
+   three --team-* variables on .aa-stage per team. */
+.aa-stage {
+  --team-1: #1c1733;   /* primary / flood */
+  --team-2: #c0392b;   /* accent */
+  --team-3: #ffffff;   /* ink on accent */
+  font-family: "Poppins", sans-serif;
+  color: #fff;
+  background:
+    radial-gradient(1100px 800px at 72% 40%, color-mix(in srgb, var(--team-2) 45%, transparent), transparent 65%),
+    radial-gradient(900px 700px at 0% 100%, color-mix(in srgb, var(--team-2) 22%, transparent), transparent 70%),
+    linear-gradient(135deg, color-mix(in srgb, var(--team-1) 80%, #000) 0%, var(--team-1) 45%, color-mix(in srgb, var(--team-1) 70%, #000) 100%);
+}
+/* Diagonal flag stripes in team colours */
+.flag { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.flag::before { content: ""; position: absolute; left: 960px; top: -300px; width: 260px; height: 1700px; background: var(--team-2); transform: rotate(24deg); opacity: .9; box-shadow: 0 0 120px color-mix(in srgb, var(--team-2) 60%, transparent); }
+.flag::after { content: ""; position: absolute; left: 1250px; top: -300px; width: 34px; height: 1700px; background: var(--team-3); transform: rotate(24deg); opacity: .85; }
+.grain { position: absolute; inset: 0; pointer-events: none; opacity: .5;
+  background: repeating-linear-gradient(24deg, rgba(255, 255, 255, .025) 0 2px, transparent 2px 22px); }
+
+/* Giant watermark crest */
+.crest { position: absolute; right: -170px; top: 60px; width: 1000px; height: 1000px; opacity: .10; filter: grayscale(.2) contrast(1.2);
+  animation: crest 40s linear infinite; }
+@keyframes crest { to { transform: rotate(360deg); } }
+
+div[data-bind] { display: block; }
+.cap { font: 600 16px/1 "Poppins"; letter-spacing: .3em; text-transform: uppercase; color: color-mix(in srgb, var(--team-3) 70%, transparent); }
+
+/* Header */
+.top { position: absolute; left: 60px; right: 60px; top: 40px; height: 90px; display: flex; align-items: center; gap: 22px; }
+.top .tl { width: 80px; height: 80px; object-fit: contain; }
+.top .tn { font: 800 30px/1.05 "Poppins"; text-transform: uppercase; letter-spacing: .01em; }
+.top .ts { font: 500 17px/1.4 "Poppins"; opacity: .7; letter-spacing: .08em; }
+.top .sp { margin-left: auto; display: flex; align-items: center; gap: 18px; text-align: right; padding: 10px 26px 10px 32px; border-radius: 999px;
+  background: rgba(0, 0, 0, .28); border: 1px solid rgba(255, 255, 255, .14); backdrop-filter: blur(10px); }
+.top .sp img { height: 62px; width: auto; }
+.top .sp .n { font: 700 24px/1.2 "Poppins"; }
+.top .bl { height: 90px; width: auto; margin-left: 12px; }
+
+/* Left: team owns the story */
+.teamcol { position: absolute; left: 60px; top: 170px; width: 700px; }
+.teamid { display: flex; align-items: center; gap: 28px; }
+.teamid img { width: 170px; height: 170px; object-fit: contain; filter: drop-shadow(0 16px 30px rgba(0, 0, 0, .5)); }
+.teamid .now { display: inline-flex; align-items: center; gap: 10px; background: var(--team-2); color: var(--team-3); font: 700 16px/1 "Poppins"; letter-spacing: .24em; text-transform: uppercase; padding: 10px 16px; border-radius: 8px; }
+.teamid .now::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: currentColor; animation: blink 1.2s steps(2) infinite; }
+@keyframes blink { 50% { opacity: .2; } }
+.teamid .n { font: 400 96px/.9 "Bebas Neue"; letter-spacing: .02em; margin-top: 14px; }
+.teamnums { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 14px; margin-top: 34px; }
+.tn-cell { padding: 20px 22px; border-radius: 18px; background: rgba(0, 0, 0, .25); border: 1px solid rgba(255, 255, 255, .12); }
+.tn-cell .v { font: 700 40px/1 "Poppins"; display: block; margin-top: 12px; }
+.tn-cell.max { background: var(--team-3); color: var(--team-1); border-color: transparent; }
+.tn-cell.max .cap { color: var(--team-2); }
+.tn-cell.max .v { font-size: 50px; }
+
+/* Player info */
+.pinfo { position: absolute; left: 60px; top: 400px; width: 700px; }
+.pinfo .first { font: 500 34px/1 "Poppins"; opacity: .8; }
+.pinfo .last { font: 400 128px/.9 "Bebas Neue"; letter-spacing: .02em; margin-top: 8px; }
+.tags { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+.tag { font: 600 20px/1 "Poppins"; padding: 11px 18px; border-radius: 10px; background: rgba(255, 255, 255, .10); border: 1px solid rgba(255, 255, 255, .16); }
+.tag b { font-weight: 500; opacity: .65; margin-right: 8px; font-size: 15px; letter-spacing: .18em; text-transform: uppercase; }
+.tag.g { background: var(--team-2); border-color: var(--team-2); color: var(--team-3); }
+.tag.g b { opacity: .8; }
+.stats { margin-top: 26px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; border-radius: 18px; overflow: hidden; background: rgba(255, 255, 255, .14); }
+.stat { padding: 16px 18px; background: color-mix(in srgb, var(--team-1) 88%, #000); display: flex; flex-direction: column-reverse; gap: 6px;
+  animation: pop .6s cubic-bezier(.2, .9, .3, 1.2) both; animation-delay: calc(var(--i) * 60ms + 200ms); }
+.stat [data-stat="value"] { font: 700 32px/1 "Poppins"; }
+.stat [data-stat="label"] { font: 600 12px/1.1 "Poppins"; letter-spacing: .18em; text-transform: uppercase; color: color-mix(in srgb, var(--team-2) 55%, #fff); }
+@keyframes pop { from { opacity: 0; transform: scale(.9); } }
+
+/* Player photo centre-right, breaking the stripe */
+.photo { position: absolute; left: 790px; top: 150px; width: 560px; height: 747px; }
+.photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 100%; filter: drop-shadow(0 30px 50px rgba(0, 0, 0, .55));
+  -webkit-mask-image: radial-gradient(60% 98% at 50% 100%, #000 78%, transparent 100%); mask-image: radial-gradient(60% 98% at 50% 100%, #000 78%, transparent 100%); }
+
+/* Right: status stack */
+.status { position: absolute; right: 60px; top: 190px; width: 440px; display: flex; flex-direction: column; gap: 14px; }
+.scell { display: flex; align-items: center; justify-content: space-between; padding: 22px 28px; border-radius: 18px; background: rgba(0, 0, 0, .32); border: 1px solid rgba(255, 255, 255, .14); backdrop-filter: blur(8px); }
+.scell .v { font: 400 72px/1 "Bebas Neue"; }
+.scell.sold { background: var(--team-3); color: var(--team-1); }
+.scell.sold .cap { color: var(--team-1); opacity: .7; }
+.meter { margin-top: 6px; padding: 20px 28px; border-radius: 18px; background: rgba(0, 0, 0, .32); border: 1px solid rgba(255, 255, 255, .14); }
+.meter .bar { height: 12px; border-radius: 99px; background: rgba(255, 255, 255, .15); margin-top: 14px; overflow: hidden; }
+.meter .bar i { display: block; height: 100%; width: calc(var(--aa-sold-pct) * 1%); background: var(--team-3); border-radius: inherit; transition: width .8s; }
+
+/* Bid band: full width bottom, the team accent at full volume */
+.bid { position: absolute; left: 0; right: 0; bottom: 0; height: 200px; background: var(--team-2); color: var(--team-3); display: flex; align-items: center; padding: 0 60px;
+  box-shadow: 0 -30px 80px rgba(0, 0, 0, .35); overflow: hidden; }
+.bid::before { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, .18) 45%, transparent 60%); background-size: 250% 100%; animation: sweep 5s ease-in-out infinite; }
+@keyframes sweep { 0% { background-position: 150% 0; } 70%, 100% { background-position: -100% 0; } }
+.bid .lab { font: 800 32px/1 "Poppins"; letter-spacing: .2em; text-transform: uppercase; width: 380px; position: relative; }
+.bid .lab small { display: block; font: 500 17px/1.4 "Poppins"; letter-spacing: .14em; opacity: .8; margin-top: 10px; }
+.bid .fig { margin-left: auto; margin-right: auto; display: flex; align-items: baseline; gap: 22px; position: relative; top: 4px; }
+.bid .amt { font: 400 204px/.8 "Bebas Neue"; letter-spacing: .01em; text-shadow: 0 10px 0 color-mix(in srgb, var(--team-1) 70%, transparent), 0 20px 50px rgba(0, 0, 0, .4); }
+.bid .unit { font: 400 110px/.8 "Bebas Neue"; text-shadow: 0 6px 0 color-mix(in srgb, var(--team-1) 70%, transparent); }
+.bid .amt.aa-bump { animation: tbump .7s cubic-bezier(.2, .9, .3, 1.5); }
+@keyframes tbump { 0% { transform: scale(1); } 30% { transform: scale(1.14) rotate(-2deg); filter: brightness(1.3); } 100% { transform: scale(1); } }
+.bid .tlogo { width: 380px; display: flex; justify-content: flex-end; position: relative; }
+.bid .tlogo img { width: 130px; height: 130px; object-fit: contain; filter: drop-shadow(0 8px 20px rgba(0, 0, 0, .4)); }
+</style>
+</head>
+<body>
+<div class="aa-stage">
+  <div class="flag"></div>
+  <div class="grain"></div>
+  <img class="crest" data-src="team.logo" alt="">
+
+  <header class="top">
+    <img class="tl" data-src="tournament.logo" alt="">
+    <div><div class="tn" data-bind="tournament.name"></div><div class="ts" data-bind="tournament.season"></div></div>
+    <div class="sp">
+      <div><div class="cap" data-bind="sponsor.label"></div><div class="n" data-bind="sponsor.name"></div></div>
+      <img data-src="sponsor.logo" alt="">
+    </div>
+    <img class="bl" data-src="brand.logo" alt="">
+  </header>
+
+  <section class="teamcol">
+    <div class="teamid">
+      <img data-src="team.logo" alt="">
+      <div><span class="now">Bidding Now</span><div class="n" data-bind="team.name"></div></div>
+    </div>
+  </section>
+
+  <section class="pinfo">
+    <div class="first" data-bind="player.first"></div>
+    <div class="last" data-bind="player.last"></div>
+    <div class="tags">
+      <span class="tag g"><b>Grade</b><span data-bind="player.grade"></span></span>
+      <span class="tag"><b>Age</b><span data-bind="player.age"></span></span>
+      <span class="tag"><b>Role</b><span data-bind="player.role"></span></span>
+    </div>
+    <div class="stats" data-stats="player.stats">
+      <template><div class="stat"><span data-stat="value"></span><span data-stat="label"></span></div></template>
+    </div>
+  </section>
+
+  <div class="photo"><img data-src="player.photo" alt=""></div>
+
+  <section class="status">
+    <div class="tn-cell max"><div class="cap">Max Bid</div><span class="v" data-bind="team.maxBid"></span></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+      <div class="tn-cell"><div class="cap">Purse</div><span class="v" data-bind="team.purse"></span></div>
+      <div class="tn-cell"><div class="cap">Slots</div><span class="v" data-bind="team.slots"></span></div>
+    </div>
+    <div class="scell"><span class="cap">Available</span><span class="v" data-bind="status.available"></span></div>
+    <div class="scell sold"><span class="cap">Sold</span><span class="v" data-bind="status.sold"></span></div>
+    <div class="scell"><span class="cap">Unsold</span><span class="v" data-bind="status.unsold"></span></div>
+  </section>
+
+  <section class="bid">
+    <div class="lab">Current Bid<small data-bind="player.name"></small></div>
+    <div class="fig"><span class="amt" data-bind="bid.amount"></span><span class="unit" data-bind="bid.unit"></span></div>
+    <div class="tlogo"><img data-src="team.logo" alt=""></div>
+  </section>
+</div>
+<script src="../shared/data.js"></script><script src="../shared/aa.js"></script>
+</body>
+</html>

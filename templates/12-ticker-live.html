@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Auction Arena · 12 Ticker Live</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto+Mono:wght@500;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/base.css">
+<style>
+/* Ticker Live: news-desk energy, ticker rails, split-flap bid, breaking red. */
+div[data-bind] { display: block; }
+:root {
+  --red: #e10600;
+  --red2: #ff2a1f;
+  --ink: #ffffff;
+  --navy: #0b0f19;
+  --slate: #141a28;
+  --mute: rgba(255,255,255,.6);
+  --cond: "Oswald", "Bebas Neue", sans-serif;
+  --sans: "Inter", system-ui, sans-serif;
+  --mono: "Roboto Mono", ui-monospace, monospace;
+}
+.aa-stage {
+  font-family: var(--sans);
+  color: var(--ink);
+  background:
+    radial-gradient(900px 600px at 20% 55%, rgba(225,6,0,.22), transparent 70%),
+    radial-gradient(900px 700px at 85% 40%, rgba(40,70,140,.25), transparent 70%),
+    repeating-linear-gradient(135deg, rgba(255,255,255,.022) 0 2px, transparent 2px 22px),
+    linear-gradient(180deg, #0d1220, #070a12);
+}
+.lbl { font-family: var(--cond); font-weight: 500; font-size: 18px; letter-spacing: .2em; text-transform: uppercase; color: var(--mute); }
+
+/* ticker rails */
+.rail { position: absolute; left: 0; right: 0; height: 64px; display: flex; overflow: hidden; z-index: 5; }
+.rail.top { top: 0; background: #fff; color: #0b0f19; }
+.rail.bot { bottom: 0; height: 72px; background: linear-gradient(180deg, #151c2c, #0b1019); border-top: 3px solid var(--red); }
+.chip { flex: none; display: flex; align-items: center; gap: 14px; padding: 0 30px; background: var(--red); color: #fff;
+  font-family: var(--cond); font-weight: 700; font-size: 28px; letter-spacing: .08em; text-transform: uppercase; position: relative; z-index: 2;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 22px) 100%, 0 100%); padding-right: 50px; }
+.chip i { width: 14px; height: 14px; border-radius: 50%; background: #fff; animation: blink 1s steps(2) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.rail.bot .chip { background: #fff; color: var(--red); }
+.rail.bot .chip i { background: var(--red); }
+.track { flex: 1; overflow: hidden; position: relative;
+  -webkit-mask: linear-gradient(90deg, transparent, #000 60px, #000 calc(100% - 60px), transparent);
+  mask: linear-gradient(90deg, transparent, #000 60px, #000 calc(100% - 60px), transparent); }
+.run { display: flex; width: max-content; height: 100%; align-items: center; animation: tick 40s linear infinite; }
+.rail.bot .run { animation-duration: 55s; animation-direction: reverse; }
+@keyframes tick { to { transform: translateX(-50%); } }
+.seg { display: flex; align-items: center; white-space: nowrap; font-family: var(--cond); font-weight: 500; font-size: 26px; letter-spacing: .04em; text-transform: uppercase; }
+.seg > span { padding: 0 26px; }
+.seg > span + span { border-left: 0; }
+.seg .dot { width: 10px; height: 10px; background: var(--red); transform: rotate(45deg); padding: 0; flex: none; }
+.seg b { font-weight: 700; }
+.rail.bot .seg { font-size: 24px; color: #dfe6f3; }
+.rail.bot .seg b { color: #fff; }
+.rail.bot .seg em { font-style: normal; color: #ff6a5f; font-weight: 700; }
+
+/* header band */
+.band { position: absolute; left: 0; right: 0; top: 64px; height: 110px; display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 36px; padding: 0 56px;
+  background: linear-gradient(90deg, rgba(20,26,40,.95), rgba(20,26,40,.6)); border-bottom: 1px solid rgba(255,255,255,.08); z-index: 3; }
+.tour { display: flex; align-items: center; gap: 18px; }
+.tour img { width: 74px; height: 74px; }
+.tour-n { font-family: var(--cond); font-weight: 700; font-size: 38px; text-transform: uppercase; letter-spacing: .02em; line-height: 1; }
+.tour-s { margin-top: 6px; font-size: 16px; }
+.breaking { justify-self: center; display: flex; align-items: center; gap: 0; font-family: var(--cond); text-transform: uppercase; }
+.breaking .a { background: var(--red); padding: 8px 18px; font-weight: 700; font-size: 26px; letter-spacing: .08em; }
+.breaking .b { background: #fff; color: #0b0f19; padding: 8px 18px; font-weight: 600; font-size: 26px; letter-spacing: .04em; }
+.spon { display: flex; align-items: center; gap: 16px; text-align: right; }
+.spon img { height: 62px; width: 166px; object-fit: contain; }
+.spon .n { font-family: var(--cond); font-weight: 600; font-size: 26px; margin-top: 2px; }
+.brand { padding-left: 32px; border-left: 1px solid rgba(255,255,255,.14); }
+.brand img { width: 88px; height: 74px; object-fit: contain; }
+
+/* left: player block */
+.pblock { position: absolute; left: 56px; top: 204px; width: 760px; height: 772px; z-index: 2; overflow: hidden;
+  background:
+    linear-gradient(115deg, transparent 58%, rgba(225,6,0,.9) 58.2%, rgba(150,0,0,.9) 72%, transparent 72.2%),
+    linear-gradient(115deg, transparent 76%, rgba(255,255,255,.08) 76.2%, rgba(255,255,255,.08) 79%, transparent 79.2%),
+    linear-gradient(180deg, #1a2234, #0e1320);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 40px), calc(100% - 40px) 100%, 0 100%); }
+.pblock .num { position: absolute; right: 26px; top: 8px; font-family: var(--cond); font-weight: 700; font-size: 300px; line-height: 1; color: rgba(255,255,255,.07); }
+.pblock img { position: absolute; left: 30px; bottom: 150px; height: 600px; width: 450px; object-fit: contain; object-position: bottom; filter: drop-shadow(18px 10px 30px rgba(0,0,0,.6)); }
+.pbar { position: absolute; left: 0; right: 0; bottom: 0; height: 150px; background: #fff; color: #0b0f19; display: grid; grid-template-columns: 1fr auto; align-items: center; padding: 0 40px 0 36px; }
+.pbar::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 14px; background: var(--red); }
+.pname .first { font-family: var(--cond); font-weight: 500; font-size: 30px; text-transform: uppercase; letter-spacing: .06em; color: #5b6475; line-height: 1; }
+.pname .last { font-family: var(--cond); font-weight: 700; font-size: 84px; line-height: .95; text-transform: uppercase; letter-spacing: .01em; }
+.grade { background: var(--red); color: #fff; font-family: var(--cond); font-weight: 700; font-size: 30px; padding: 10px 22px; text-transform: uppercase; letter-spacing: .1em; transform: skewX(-10deg); }
+.pmeta { position: absolute; right: 36px; top: 40px; display: grid; gap: 18px; text-align: right; width: 250px; }
+.pmeta .v { font-family: var(--cond); font-weight: 700; font-size: 44px; line-height: 1; margin-top: 4px; text-transform: uppercase; }
+.pmeta .lbl { color: rgba(255,255,255,.75); }
+.pstyle { position: absolute; left: 36px; top: 30px; font-family: var(--cond); font-size: 20px; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.7); max-width: 420px; line-height: 1.3; letter-spacing: .03em; font-size: 18px; }
+
+/* right column */
+.rcol { position: absolute; left: 846px; right: 56px; top: 204px; height: 772px; display: grid; grid-template-rows: auto auto 1fr; gap: 22px; z-index: 2; }
+.bidbox { background: linear-gradient(180deg, #161d2e, #0d1220); border: 1px solid rgba(255,255,255,.08); padding: 20px 32px 26px; position: relative; }
+.bidbox::before { content: ""; position: absolute; left: 0; top: 0; right: 0; height: 6px; background: linear-gradient(90deg, var(--red), var(--red2) 60%, transparent); }
+.bh { display: flex; justify-content: space-between; align-items: center; }
+.bh .lbl { color: #fff; font-weight: 600; font-size: 24px; }
+.bh .onair { font-family: var(--cond); font-weight: 700; font-size: 20px; letter-spacing: .14em; color: var(--red2); display: flex; align-items: center; gap: 10px; }
+.bh .onair::before { content: ""; width: 12px; height: 12px; border-radius: 50%; background: var(--red2); box-shadow: 0 0 12px var(--red2); animation: blink 1s steps(2) infinite; }
+.bidrow { display: flex; align-items: center; gap: 26px; margin-top: 14px; }
+/* split-flap: each monospace glyph sits on its own tile via a 1.3ch repeating background */
+.flap { font-family: var(--mono); font-weight: 700; font-size: 168px; line-height: 1; color: #fff; letter-spacing: .3ch; padding: 16px 0 16px .1ch;
+  clip-path: inset(0 .22ch 0 0);
+  background-position: 0 0, 0 0, 0 0, 0 100%;
+  background-repeat: no-repeat, no-repeat, repeat-x, repeat-x;
+  background-image:
+    linear-gradient(180deg, transparent calc(50% - 2px), #05070c calc(50% - 2px), #05070c calc(50% + 2px), transparent calc(50% + 2px)),
+    linear-gradient(180deg, rgba(255,255,255,.07), transparent 50%, rgba(0,0,0,.25) 50%, rgba(0,0,0,.05)),
+    repeating-linear-gradient(90deg, #2a3348 0 1.2ch, transparent 1.2ch 1.3ch),
+    repeating-linear-gradient(90deg, #1d2536 0 1.2ch, transparent 1.2ch 1.3ch);
+  background-size: 100% 100%, 100% 100%, 1.3ch 50%, 1.3ch 50%;
+  text-shadow: 0 4px 0 rgba(0,0,0,.35); }
+.flap.aa-bump { animation: flip .5s cubic-bezier(.3,.8,.3,1); }
+@keyframes flip {
+  0% { transform: perspective(700px) rotateX(0); filter: brightness(1); }
+  30% { transform: perspective(700px) rotateX(-70deg); filter: brightness(.5); }
+  60% { transform: perspective(700px) rotateX(12deg); filter: brightness(1.5); }
+  100% { transform: perspective(700px) rotateX(0); filter: brightness(1); }
+}
+.bunit { font-family: var(--cond); font-weight: 700; font-size: 110px; color: var(--red2); line-height: 1; }
+
+.teamrow { display: grid; grid-template-columns: 120px 1fr auto; gap: 24px; align-items: center; background: #fff; color: #0b0f19; padding: 18px 28px; position: relative; }
+.teamrow::after { content: ""; position: absolute; right: 0; top: 0; bottom: 0; width: 10px; background: var(--red); }
+.teamrow img { width: 120px; height: 120px; }
+.teamrow .lbl { color: #5b6475; }
+.tname { font-family: var(--cond); font-weight: 700; font-size: 56px; line-height: 1; text-transform: uppercase; margin-top: 4px; }
+.maxb { text-align: right; padding-right: 20px; }
+.maxb .v { font-family: var(--mono); font-weight: 700; font-size: 64px; color: var(--red); line-height: 1; margin-top: 6px; }
+.tsub { display: flex; gap: 30px; margin-top: 8px; font-family: var(--cond); font-size: 22px; text-transform: uppercase; letter-spacing: .06em; color: #3a4252; }
+.tsub b { color: #0b0f19; }
+
+.lower { display: grid; grid-template-columns: 1fr 250px; gap: 22px; min-height: 0; }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 1fr); gap: 2px; background: rgba(255,255,255,.08); }
+.st { background: #111727; padding: 14px 18px; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden;
+  opacity: 0; animation: slide .5s ease-out forwards; animation-delay: calc(var(--i) * 70ms + 200ms); }
+.st::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--red); transform: scaleY(0); transform-origin: top; animation: grow .5s ease-out forwards; animation-delay: calc(var(--i) * 70ms + 500ms); }
+.st .v { font-family: var(--mono); font-weight: 700; font-size: 40px; line-height: 1; white-space: nowrap; letter-spacing: -.03em; }
+.st .l { font-family: var(--cond); font-size: 18px; letter-spacing: .14em; text-transform: uppercase; color: var(--mute); margin-top: 10px; }
+@keyframes slide { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes grow { to { transform: scaleY(1); } }
+.pool { background: var(--red); padding: 18px 22px; display: grid; grid-template-rows: auto repeat(3, 1fr) auto; }
+.pool .lbl { color: rgba(255,255,255,.85); }
+.pool .r { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid rgba(255,255,255,.25); }
+.pool .r span:first-child { font-family: var(--cond); font-size: 20px; letter-spacing: .12em; text-transform: uppercase; }
+.pool .r .v { font-family: var(--mono); font-weight: 700; font-size: 42px; }
+.pool .pb { height: 8px; background: rgba(0,0,0,.3); margin-top: 12px; }
+.pool .pb i { display: block; height: 100%; width: calc(var(--aa-sold-pct, 0) * 1%); background: #fff; }
+</style>
+</head>
+<body>
+<div class="aa-stage">
+  <div class="rail top">
+    <div class="chip"><i></i>Live Auction</div>
+    <div class="track"><div class="run">
+      <div class="seg"><span><b data-bind="player.name"></b></span><i class="dot"></i><span>Current bid <b data-bind="bid.amount"></b> <b data-bind="bid.unit"></b></span><i class="dot"></i><span>Leading <b data-bind="team.name"></b></span><i class="dot"></i><span>Max bid <b data-bind="team.maxBid"></b></span><i class="dot"></i><span><span data-bind="player.role"></span> · <span data-bind="player.grade"></span> grade</span><i class="dot"></i><span data-bind="tournament.name"></span><i class="dot"></i></div>
+      <div class="seg"><span><b data-bind="player.name"></b></span><i class="dot"></i><span>Current bid <b data-bind="bid.amount"></b> <b data-bind="bid.unit"></b></span><i class="dot"></i><span>Leading <b data-bind="team.name"></b></span><i class="dot"></i><span>Max bid <b data-bind="team.maxBid"></b></span><i class="dot"></i><span><span data-bind="player.role"></span> · <span data-bind="player.grade"></span> grade</span><i class="dot"></i><span data-bind="tournament.name"></span><i class="dot"></i></div>
+    </div></div>
+  </div>
+
+  <header class="band">
+    <div class="tour">
+      <img data-src="tournament.logo" alt="">
+      <div><div class="tour-n" data-bind="tournament.name"></div><div class="lbl tour-s" data-bind="tournament.season"></div></div>
+    </div>
+    <div class="breaking"><span class="a">Breaking</span><span class="b">Now under the hammer</span></div>
+    <div class="spon">
+      <div><div class="lbl" data-bind="sponsor.label"></div><div class="n" data-bind="sponsor.name"></div></div>
+      <img data-src="sponsor.logo" alt="">
+    </div>
+    <div class="brand"><img data-src="brand.logo" alt=""></div>
+  </header>
+
+  <section class="pblock">
+    <div class="num" data-bind="player.number"></div>
+    <div class="pstyle" data-bind="player.style"></div>
+    <img data-src="player.photo" alt="">
+    <div class="pmeta">
+      <div><div class="lbl">Role</div><div class="v" data-bind="player.role"></div></div>
+      <div><div class="lbl">Age</div><div class="v" data-bind="player.age"></div></div>
+      <div><div class="lbl">Base</div><div class="v" data-bind="player.basePrice"></div></div>
+    </div>
+    <div class="pbar">
+      <div class="pname"><div class="first" data-bind="player.first"></div><div class="last" data-bind="player.last"></div></div>
+      <span class="grade" data-bind="player.grade"></span>
+    </div>
+  </section>
+
+  <section class="rcol">
+    <div class="bidbox">
+      <div class="bh"><span class="lbl">Current Bid</span><span class="onair">ON AIR</span></div>
+      <div class="bidrow"><span class="flap" data-bind="bid.amount"></span><span class="bunit" data-bind="bid.unit"></span></div>
+    </div>
+    <div class="teamrow">
+      <img data-src="team.logo" alt="">
+      <div>
+        <div class="lbl">Bidding Team</div>
+        <div class="tname" data-bind="team.name"></div>
+        <div class="tsub"><span>Purse <b data-bind="team.purse"></b></span><span>Slots <b data-bind="team.slots"></b></span></div>
+      </div>
+      <div class="maxb"><div class="lbl">Max Bid</div><div class="v" data-bind="team.maxBid"></div></div>
+    </div>
+    <div class="lower">
+      <div class="stats" data-stats="player.stats"><template><div class="st"><span class="v" data-stat="value"></span><span class="l" data-stat="label"></span></div></template></div>
+      <div class="pool">
+        <div class="lbl">Player Pool</div>
+        <div class="r"><span>Available</span><span class="v" data-bind="status.available"></span></div>
+        <div class="r"><span>Sold</span><span class="v" data-bind="status.sold"></span></div>
+        <div class="r"><span>Unsold</span><span class="v" data-bind="status.unsold"></span></div>
+        <div class="pb"><i></i></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="rail bot">
+    <div class="chip"><i></i>Auction Desk</div>
+    <div class="track"><div class="run">
+      <div class="seg"><span><em data-bind="sponsor.label"></em> <b data-bind="sponsor.name"></b></span><i class="dot"></i><span>Pool <b data-bind="status.available"></b> players</span><i class="dot"></i><span>Sold <b data-bind="status.sold"></b></span><i class="dot"></i><span>Unsold <b data-bind="status.unsold"></b></span><i class="dot"></i><span><b data-bind="team.name"></b> purse <b data-bind="team.purse"></b></span><i class="dot"></i><span data-bind="tournament.season"></span><i class="dot"></i><span>Powered by <b data-bind="brand.name"></b></span><i class="dot"></i></div>
+      <div class="seg"><span><em data-bind="sponsor.label"></em> <b data-bind="sponsor.name"></b></span><i class="dot"></i><span>Pool <b data-bind="status.available"></b> players</span><i class="dot"></i><span>Sold <b data-bind="status.sold"></b></span><i class="dot"></i><span>Unsold <b data-bind="status.unsold"></b></span><i class="dot"></i><span><b data-bind="team.name"></b> purse <b data-bind="team.purse"></b></span><i class="dot"></i><span data-bind="tournament.season"></span><i class="dot"></i><span>Powered by <b data-bind="brand.name"></b></span><i class="dot"></i></div>
+    </div></div>
+  </div>
+</div>
+<script src="../shared/data.js"></script><script src="../shared/aa.js"></script>
+</body>
+</html>

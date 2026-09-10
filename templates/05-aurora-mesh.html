@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Auction Arena · 05 Aurora Mesh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/base.css">
+<style>
+/* 05 Aurora Mesh: drifting violet, coral and teal mesh; soft glass; calm, airy editorial layout. */
+:root {
+  --ink: #ffffff;
+  --soft: rgba(255,255,255,.72);
+  --glass: rgba(255,255,255,.12);
+  --glass-b: rgba(255,255,255,.26);
+  --coral: #ff8a70;
+  --teal: #5ef2d6;
+  --violet: #8b5cf6;
+}
+.aa-stage { font-family: Inter, system-ui, sans-serif; color: var(--ink); background: #1b1036; }
+.aa-stage [data-bind].blk { display: block; }
+
+/* Mesh: large blurred blobs drifting slowly */
+.mesh { position: absolute; inset: -200px; filter: blur(90px) saturate(1.2); }
+.mesh i { position: absolute; border-radius: 50%; animation: drift 22s ease-in-out infinite alternate; }
+.mesh i:nth-child(1) { width: 1100px; height: 1000px; left: -80px; top: -60px; background: #6d28d9; }
+.mesh i:nth-child(2) { width: 900px; height: 800px; left: 900px; top: -140px; background: #ff6b6b; animation-duration: 26s; animation-delay: -6s; }
+.mesh i:nth-child(3) { width: 1000px; height: 900px; left: 1300px; top: 560px; background: #14b8a6; animation-duration: 30s; animation-delay: -12s; }
+.mesh i:nth-child(4) { width: 900px; height: 800px; left: 200px; top: 720px; background: #db2777; opacity: .75; animation-duration: 24s; animation-delay: -3s; }
+.mesh i:nth-child(5) { width: 700px; height: 700px; left: 760px; top: 420px; background: #312e81; animation-duration: 20s; }
+@keyframes drift {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(120px, 60px) scale(1.12); }
+  100% { transform: translate(-80px, 100px) scale(.94); }
+}
+/* Film grain and vignette to keep it premium */
+.aa-stage::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse at center, transparent 55%, rgba(10,4,30,.45)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.08'/%3E%3C/svg%3E");
+}
+
+.glass {
+  background: var(--glass);
+  border: 1px solid var(--glass-b);
+  backdrop-filter: blur(28px) saturate(1.4);
+  -webkit-backdrop-filter: blur(28px) saturate(1.4);
+  box-shadow: 0 30px 80px rgba(20,6,50,.35), inset 0 1px 0 rgba(255,255,255,.35);
+}
+
+/* Top row */
+.top { position: absolute; left: 96px; right: 96px; top: 56px; height: 88px; display: flex; align-items: center; justify-content: space-between; z-index: 2; }
+.pill { display: flex; align-items: center; gap: 18px; height: 88px; padding: 0 30px 0 12px; border-radius: 44px; }
+.pill img { width: 64px; height: 64px; object-fit: contain; }
+.pill .nm { font-family: "Space Grotesk", sans-serif; font-weight: 600; font-size: 28px; line-height: 1.1; white-space: nowrap; }
+.pill .ss { font-size: 18px; color: var(--soft); font-weight: 500; letter-spacing: .5px; }
+.brand img { height: 84px; width: auto; opacity: .95; }
+.spon { padding: 0 12px 0 30px; }
+.spon .ss { text-transform: uppercase; letter-spacing: 3px; font-size: 15px; font-weight: 600; text-align: right; }
+.spon .nm { text-align: right; }
+.spon img { width: auto; height: 64px; background: rgba(255,255,255,.92); border-radius: 32px; padding: 6px 18px; }
+
+/* Left: identity */
+.who { position: absolute; left: 96px; top: 196px; width: 980px; z-index: 2; }
+.tags { display: flex; gap: 12px; }
+.tag { font-size: 22px; font-weight: 600; padding: 10px 22px; border-radius: 30px; white-space: nowrap; }
+.tag.grade { background: linear-gradient(90deg, var(--coral), #ffb86b); color: #2b0f1f; }
+.tag .d { opacity: .6; margin: 0 6px; }
+.name { margin-top: 22px; font-family: "Space Grotesk", sans-serif; line-height: .92; letter-spacing: -3px; }
+.name .f { font-size: 76px; font-weight: 400; color: var(--soft); }
+.name .l { font-size: 150px; font-weight: 700; margin-top: 4px; white-space: nowrap; }
+.style { margin-top: 18px; font-size: 24px; color: var(--soft); font-weight: 500; }
+
+/* Bid card */
+.bid { position: absolute; left: 96px; top: 572px; width: 980px; height: 348px; border-radius: 40px; padding: 34px 44px; z-index: 2; display: grid; grid-template-rows: auto 1fr auto; overflow: hidden; }
+.bid::before { content: ""; position: absolute; inset: 0; background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,.14) 45%, transparent 60%); background-size: 250% 100%; animation: sheen 7s ease-in-out infinite; pointer-events: none; }
+@keyframes sheen { 0% { background-position: 120% 0; } 60%, 100% { background-position: -120% 0; } }
+.bid .k { display: flex; align-items: center; gap: 12px; font-size: 22px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--soft); }
+.bid .k::before { content: ""; width: 12px; height: 12px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 0 6px rgba(94,242,214,.2); animation: breathe 2.4s ease-in-out infinite; }
+@keyframes breathe { 50% { box-shadow: 0 0 0 12px rgba(94,242,214,0); } }
+.amt { display: flex; align-items: baseline; gap: 18px; align-self: center; }
+.bid-amt { font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 206px; line-height: .84; letter-spacing: -6px; font-variant-numeric: tabular-nums;
+  background: linear-gradient(100deg, #fff 30%, #ffd9cf 60%, #b8fff2); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.bid-unit { font-family: "Space Grotesk", sans-serif; font-size: 76px; font-weight: 600; color: var(--coral); }
+.bid-amt.aa-bump { animation: glow .9s cubic-bezier(.2,.8,.2,1); }
+@keyframes glow {
+  0% { transform: translateY(0); filter: drop-shadow(0 0 0 rgba(255,255,255,0)); }
+  30% { transform: translateY(-10px) scale(1.06); filter: drop-shadow(0 0 40px rgba(255,200,190,.9)); }
+  100% { transform: translateY(0); filter: drop-shadow(0 0 0 rgba(255,255,255,0)); }
+}
+.teamrow { display: flex; align-items: center; gap: 20px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.2); }
+.teamrow img { width: 64px; height: 64px; object-fit: contain; }
+.teamrow .nm { font-family: "Space Grotesk", sans-serif; font-size: 34px; font-weight: 600; white-space: nowrap; }
+.teamrow .lb { font-size: 16px; letter-spacing: 3px; text-transform: uppercase; color: var(--soft); font-weight: 600; }
+.teamrow .max { margin-left: auto; text-align: right; }
+.teamrow .max .v { font-family: "Space Grotesk", sans-serif; font-size: 40px; font-weight: 700; color: var(--teal); }
+
+/* Right: arch card with photo and stats */
+.card { position: absolute; left: 1156px; top: 196px; width: 668px; height: 724px; border-radius: 334px 334px 40px 40px; overflow: hidden; z-index: 2; display: flex; flex-direction: column; }
+.photo { position: relative; height: 416px; background: radial-gradient(circle at 50% 70%, rgba(255,255,255,.28), transparent 60%); }
+.photo img { position: absolute; inset: 20px 0 0 0; width: 100%; height: calc(100% - 20px); object-fit: contain; object-position: center bottom;
+  -webkit-mask: linear-gradient(90deg, transparent 28%, #000 40%, #000 60%, transparent 72%); mask: linear-gradient(90deg, transparent 28%, #000 40%, #000 60%, transparent 72%); }
+.photo .age { position: absolute; right: 34px; bottom: 22px; text-align: center; width: 104px; height: 104px; border-radius: 50%; display: grid; place-content: center; }
+.photo .age b { font-family: "Space Grotesk", sans-serif; font-size: 44px; line-height: 1; display: block; }
+.photo .age small { font-size: 14px; letter-spacing: 2px; text-transform: uppercase; color: var(--soft); font-weight: 600; }
+.stats { flex: 1; display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 1fr); gap: 1px; background: rgba(255,255,255,.16); border-top: 1px solid rgba(255,255,255,.2); }
+.st { background: rgba(28,14,60,.28); display: flex; flex-direction: column; justify-content: center; padding: 0 20px; animation: rise .8s cubic-bezier(.2,.8,.2,1) both; animation-delay: calc(var(--i) * 70ms); }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } }
+.st [data-stat="value"] { font-family: "Space Grotesk", sans-serif; font-size: 44px; font-weight: 700; line-height: 1.05; letter-spacing: -1px; white-space: nowrap; }
+.st [data-stat="label"] { font-size: 16px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--soft); margin-top: 6px; white-space: nowrap; }
+
+/* Bottom status */
+.foot { position: absolute; left: 96px; right: 96px; bottom: 56px; height: 76px; display: flex; align-items: center; gap: 44px; z-index: 2; }
+.cnt { display: flex; align-items: baseline; gap: 12px; }
+.cnt b { font-family: "Space Grotesk", sans-serif; font-size: 44px; font-weight: 700; }
+.cnt span { font-size: 18px; color: var(--soft); font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
+.cnt.s b { color: var(--teal); }
+.cnt.u b { color: var(--coral); }
+.track { flex: 1; height: 12px; border-radius: 6px; background: rgba(255,255,255,.16); overflow: hidden; }
+.track i { display: block; height: 100%; width: calc(var(--aa-sold-pct, 0) * 1%); border-radius: 6px; background: linear-gradient(90deg, var(--teal), #fff, var(--coral)); transition: width .8s; }
+.pct { font-size: 18px; color: var(--soft); font-weight: 600; letter-spacing: 2px; text-transform: uppercase; white-space: nowrap; }
+</style>
+</head>
+<body>
+<div class="aa-stage">
+  <div class="mesh"><i></i><i></i><i></i><i></i><i></i></div>
+
+  <header class="top">
+    <div class="pill glass">
+      <img data-src="tournament.logo" alt="">
+      <div><span class="nm blk" data-bind="tournament.name"></span><span class="ss blk" data-bind="tournament.season"></span></div>
+    </div>
+    <div class="brand"><img data-src="brand.logo" alt=""></div>
+    <div class="pill glass spon">
+      <div><span class="ss blk" data-bind="sponsor.label"></span><span class="nm blk" data-bind="sponsor.name"></span></div>
+      <img data-src="sponsor.logo" alt="">
+    </div>
+  </header>
+
+  <section class="who">
+    <div class="tags">
+      <span class="tag grade" data-bind="player.grade"></span>
+      <span class="tag glass" data-bind="player.role"></span>
+      <span class="tag glass">#<span data-bind="player.number"></span><span class="d">·</span>Base <span data-bind="player.basePrice"></span></span>
+    </div>
+    <div class="name">
+      <span class="f blk" data-bind="player.first"></span>
+      <span class="l blk" data-bind="player.last"></span>
+    </div>
+    <div class="style" data-bind="player.style"></div>
+  </section>
+
+  <section class="bid glass">
+    <div class="k">Current Bid</div>
+    <div class="amt"><span class="bid-amt" data-bind="bid.amount"></span><span class="bid-unit" data-bind="bid.unit"></span></div>
+    <div class="teamrow">
+      <img data-src="team.logo" alt="">
+      <div><span class="lb blk">Bidding Team</span><span class="nm blk" data-bind="team.name"></span></div>
+      <div class="max"><span class="lb blk">Max Bid</span><span class="v blk" data-bind="team.maxBid"></span></div>
+    </div>
+  </section>
+
+  <section class="card glass">
+    <div class="photo">
+      <img data-src="player.photo" alt="">
+      <div class="age glass"><b data-bind="player.age"></b><small>Age</small></div>
+    </div>
+    <div class="stats" data-stats="player.stats">
+      <template><div class="st"><span data-stat="value"></span><span data-stat="label"></span></div></template>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <div class="cnt"><b data-bind="status.available"></b><span>Available</span></div>
+    <div class="cnt s"><b data-bind="status.sold"></b><span>Sold</span></div>
+    <div class="cnt u"><b data-bind="status.unsold"></b><span>Unsold</span></div>
+    <div class="track"><i></i></div>
+    <div class="pct">Purse <span data-bind="team.purse"></span> · Slots <span data-bind="team.slots"></span></div>
+  </footer>
+</div>
+<script src="../shared/data.js"></script><script src="../shared/aa.js"></script>
+</body>
+</html>

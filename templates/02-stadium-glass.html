@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Auction Arena · 02 Stadium Glass</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/base.css">
+<style>
+/* Stadium Glass: floodlight bokeh behind frosted panels, cyan edge light. */
+:root {
+  --ink: #f4f9ff;
+  --mute: rgba(214,232,255,.66);
+  --cyan: #5ee7ff;
+  --cyan-2: #22b8ff;
+  --glass: rgba(255,255,255,.075);
+  --edge: rgba(255,255,255,.16);
+}
+.aa-stage {
+  color: var(--ink);
+  font-family: Poppins, system-ui, sans-serif;
+  background: linear-gradient(180deg, #06122a 0%, #081a3a 45%, #04213a 72%, #021018 100%);
+}
+/* Bokeh floodlights + pitch glow */
+.bokeh { position: absolute; inset: -80px; filter: blur(46px); animation: drift 18s ease-in-out infinite alternate; }
+.bokeh::before, .bokeh::after { content: ""; position: absolute; inset: 0; }
+.bokeh::before {
+  background:
+    radial-gradient(160px 160px at 12% 14%, rgba(255,246,214,.55), transparent 70%),
+    radial-gradient(110px 110px at 24% 8%, rgba(160,220,255,.45), transparent 70%),
+    radial-gradient(200px 200px at 46% 4%, rgba(255,255,255,.35), transparent 70%),
+    radial-gradient(130px 130px at 66% 12%, rgba(120,200,255,.5), transparent 70%),
+    radial-gradient(170px 170px at 86% 6%, rgba(255,236,190,.5), transparent 70%),
+    radial-gradient(90px 90px at 95% 22%, rgba(94,231,255,.45), transparent 70%),
+    radial-gradient(120px 120px at 4% 34%, rgba(94,231,255,.35), transparent 70%);
+}
+.bokeh::after {
+  background:
+    radial-gradient(1200px 360px at 50% 108%, rgba(24,200,140,.35), transparent 70%),
+    radial-gradient(800px 500px at 30% 60%, rgba(34,120,255,.22), transparent 70%);
+}
+@keyframes drift { to { transform: translate3d(40px, 16px, 0) scale(1.04); } }
+.aa-stage::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(1400px 900px at 50% 45%, transparent 55%, rgba(0,6,18,.65));
+}
+
+.glass {
+  position: absolute;
+  background: linear-gradient(145deg, rgba(255,255,255,.12), rgba(255,255,255,.04));
+  border: 1px solid var(--edge);
+  border-radius: 36px;
+  backdrop-filter: blur(28px) saturate(140%);
+  -webkit-backdrop-filter: blur(28px) saturate(140%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.28), inset 0 -1px 0 rgba(94,231,255,.2), 0 30px 80px rgba(0,0,0,.35);
+}
+/* Cyan edge light along the top rim */
+.glass.edge::before {
+  content: ""; position: absolute; left: 40px; right: 40px; top: -1px; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  box-shadow: 0 0 18px var(--cyan);
+}
+.lbl { display: block; font: 600 18px/1 Poppins, sans-serif; letter-spacing: .22em; text-transform: uppercase; color: var(--mute); }
+
+/* Top bar */
+.topbar { left: 60px; right: 60px; top: 36px; height: 116px; border-radius: 60px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 0 44px 0 22px; z-index: 3; }
+.tourn { display: flex; align-items: center; gap: 20px; }
+.tourn img { width: 84px; height: 84px; object-fit: contain; }
+.tourn .nm, .tourn .ss, .spons .nm, .teamp .nm, .nameplate .first { display: block; }
+.tourn .nm { font: 700 32px/1.05 Poppins, sans-serif; }
+.tourn .ss { margin-top: 4px; font: 500 19px/1 Poppins, sans-serif; color: var(--cyan); letter-spacing: .04em; }
+.brand img { height: 92px; width: 110px; object-fit: contain; }
+.spons { justify-self: end; display: flex; align-items: center; gap: 22px; text-align: right; }
+.spons .nm { margin-top: 8px; font: 700 28px/1 Poppins, sans-serif; }
+.spons img { height: 78px; width: 200px; object-fit: contain; }
+
+/* Bid panel (left, focal) */
+.bidp { left: 60px; top: 190px; width: 1080px; height: 380px; padding: 34px 52px; z-index: 2; }
+.bidp .head { display: flex; justify-content: space-between; align-items: center; }
+.pill { display: inline-flex; align-items: center; gap: 12px; height: 50px; padding: 0 24px; border-radius: 99px; background: rgba(94,231,255,.14); border: 1px solid rgba(94,231,255,.4); font: 700 20px/1 Poppins, sans-serif; letter-spacing: .2em; text-transform: uppercase; color: var(--cyan); }
+.pill i { width: 12px; height: 12px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 14px var(--cyan); animation: blink 1.4s ease-in-out infinite; }
+@keyframes blink { 50% { opacity: .25; } }
+.basep { font: 500 22px/1 Poppins, sans-serif; color: var(--mute); }
+.basep span { color: var(--ink); font-weight: 700; }
+.figure { display: flex; align-items: baseline; justify-content: center; gap: 26px; margin-top: 4px; }
+.figure .rs { font: 400 150px/1 "Bebas Neue", sans-serif; color: var(--cyan); }
+.figure .val {
+  font: 400 330px/.8 "Bebas Neue", sans-serif; letter-spacing: .01em;
+  background: linear-gradient(180deg, #ffffff 30%, #bff4ff 70%, #6fdcff);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 0 34px rgba(94,231,255,.45));
+  transform-origin: left bottom;
+}
+.figure .unit { font: 400 170px/1 "Bebas Neue", sans-serif; color: var(--ink); letter-spacing: .04em; }
+.figure .val.aa-bump { animation: glass-bump .75s cubic-bezier(.2,.9,.3,1.25); }
+@keyframes glass-bump {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.08) translateY(-6px); filter: drop-shadow(0 0 80px rgba(94,231,255,1)) brightness(1.25); }
+  100% { transform: scale(1); }
+}
+
+/* Team strip under bid */
+.teamp { left: 60px; top: 768px; width: 1080px; height: 150px; padding: 0 44px 0 28px; display: flex; align-items: center; gap: 28px; z-index: 2; }
+.teamp img { width: 116px; height: 116px; object-fit: contain; filter: drop-shadow(0 8px 20px rgba(0,0,0,.5)); }
+.teamp .nm { margin-top: 8px; font: 700 40px/1 Poppins, sans-serif; letter-spacing: -.01em; }
+.teamp .max { margin-left: auto; text-align: right; padding-left: 36px; border-left: 1px solid var(--edge); }
+.teamp .max .v { display: block; margin-top: 8px; font: 400 84px/.9 "Bebas Neue", sans-serif; color: var(--cyan); letter-spacing: .02em; }
+.teamp .mini { display: flex; gap: 28px; font: 500 19px/1 Poppins, sans-serif; color: var(--mute); margin-top: 10px; }
+.teamp .mini b { color: var(--ink); }
+
+/* Status strip */
+.statusp { left: 60px; top: 942px; width: 1080px; height: 102px; padding: 0 40px 8px; display: flex; align-items: center; z-index: 2; overflow: hidden; }
+.st { flex: 1; display: flex; align-items: baseline; justify-content: center; gap: 16px; }
+.st + .st { border-left: 1px solid var(--edge); }
+.st .lbl { display: inline-block; }
+.st span[data-bind] { font: 400 64px/1 "Bebas Neue", sans-serif; }
+.st.sold span[data-bind] { color: var(--cyan); }
+.statusp .track { position: absolute; left: 0; right: 0; bottom: 0; height: 6px; background: rgba(255,255,255,.1); }
+.statusp .track i { display: block; height: 100%; width: calc(var(--aa-sold-pct, 0) * 1%); background: linear-gradient(90deg, var(--cyan-2), var(--cyan)); box-shadow: 0 0 16px var(--cyan); transition: width .8s ease; }
+
+/* Player panel (right) with cut-out breaking out of the glass */
+.playerp { left: 1170px; top: 360px; width: 690px; height: 684px; z-index: 1; }
+.photo {
+  position: absolute; left: 1170px; top: 176px; width: 690px; height: 620px; z-index: 4;
+  object-fit: contain; object-position: center bottom;
+  filter: drop-shadow(0 0 1px rgba(94,231,255,.9)) drop-shadow(-12px 0 24px rgba(94,231,255,.35)) drop-shadow(0 30px 40px rgba(0,0,0,.5));
+}
+.halo { position: absolute; left: 1200px; top: 170px; width: 640px; height: 640px; border-radius: 50%; background: radial-gradient(circle, rgba(94,231,255,.35), transparent 65%); filter: blur(10px); z-index: 1; animation: pulse 5s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: .55; transform: scale(.95); } }
+.nameplate { position: absolute; left: 1170px; width: 690px; top: 796px; height: 248px; z-index: 5; padding: 18px 40px 26px; display: flex; flex-direction: column; justify-content: space-between; border-radius: 0 0 36px 36px; background: linear-gradient(180deg, rgba(4,18,40,.2), rgba(4,18,40,.85)); border: 1px solid var(--edge); border-top-color: rgba(94,231,255,.5); }
+.nameplate .first { font: 500 32px/1 Poppins, sans-serif; color: var(--mute); }
+.nameplate .last { display: block; font: 400 104px/.9 "Bebas Neue", sans-serif; letter-spacing: .02em; }
+.tags { display: flex; gap: 12px; flex-wrap: nowrap; }
+.tag { display: inline-flex; align-items: center; gap: 10px; height: 46px; padding: 0 20px; border-radius: 99px; background: rgba(255,255,255,.08); border: 1px solid var(--edge); font: 600 20px/1 Poppins, sans-serif; white-space: nowrap; }
+.tag small { font-size: 15px; color: var(--mute); letter-spacing: .14em; text-transform: uppercase; }
+.tag.hot { background: linear-gradient(90deg, var(--cyan-2), var(--cyan)); color: #03243a; border-color: transparent; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+
+/* Stats: one frosted row of eight */
+.statsp { left: 60px; top: 594px; width: 1080px; height: 150px; padding: 0 16px; z-index: 2; }
+.stats { height: 100%; display: grid; grid-template-columns: repeat(8, 1fr); align-items: center; }
+.stat { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 6px; }
+.stat + .stat { border-left: 1px solid rgba(255,255,255,.1); }
+.stat .v { font: 400 54px/1 "Bebas Neue", sans-serif; letter-spacing: .02em; }
+.stat .l { margin-top: 8px; font: 600 13px/1.2 Poppins, sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--mute); white-space: nowrap; }
+</style>
+</head>
+<body>
+<div class="aa-stage">
+  <div class="bokeh"></div>
+
+  <div class="glass topbar">
+    <div class="tourn">
+      <img data-src="tournament.logo" alt="">
+      <div><div class="nm" data-bind="tournament.name"></div><div class="ss" data-bind="tournament.season"></div></div>
+    </div>
+    <div class="brand"><img data-src="brand.logo" alt=""></div>
+    <div class="spons">
+      <div><div class="lbl" data-bind="sponsor.label"></div><div class="nm" data-bind="sponsor.name"></div></div>
+      <img data-src="sponsor.logo" alt="">
+    </div>
+  </div>
+
+  <div class="glass edge bidp">
+    <div class="head">
+      <span class="pill"><i></i>Current Bid</span>
+      <span class="basep">Base Price <span data-bind="player.basePrice"></span></span>
+    </div>
+    <div class="figure">
+      <span class="rs">₹</span>
+      <span class="val" data-bind="bid.amount"></span>
+      <span class="unit" data-bind="bid.unit"></span>
+    </div>
+  </div>
+
+  <div class="glass teamp">
+    <img data-src="team.logo" alt="">
+    <div>
+      <div class="lbl">Bidding Team</div>
+      <div class="nm" data-bind="team.name"></div>
+      <div class="mini"><span>Purse <b data-bind="team.purse"></b></span><span>Slots <b data-bind="team.slots"></b></span></div>
+    </div>
+    <div class="max"><div class="lbl">Max Bid</div><span class="v" data-bind="team.maxBid"></span></div>
+  </div>
+
+  <div class="glass statsp">
+    <div class="stats" data-stats="player.stats">
+      <template><div class="stat"><span class="v" data-stat="value"></span><span class="l" data-stat="label"></span></div></template>
+    </div>
+  </div>
+
+  <div class="glass statusp">
+    <div class="st"><span class="lbl">Available</span><span data-bind="status.available"></span></div>
+    <div class="st sold"><span class="lbl">Sold</span><span data-bind="status.sold"></span></div>
+    <div class="st"><span class="lbl">Unsold</span><span data-bind="status.unsold"></span></div>
+    <div class="track"><i></i></div>
+  </div>
+
+  <div class="halo"></div>
+  <div class="glass edge playerp"></div>
+  <img class="photo" data-src="player.photo" alt="">
+  <div class="nameplate">
+    <div>
+      <span class="first" data-bind="player.first"></span>
+      <span class="last" data-bind="player.last"></span>
+    </div>
+    <div class="tags">
+      <span class="tag hot" data-bind="player.grade"></span>
+      <span class="tag"><small>Age</small><span data-bind="player.age"></span></span>
+      <span class="tag"><small>Role</small><span data-bind="player.role"></span></span>
+    </div>
+  </div>
+</div>
+<script src="../shared/data.js"></script><script src="../shared/aa.js"></script>
+</body>
+</html>

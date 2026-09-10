@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Auction Arena · 09 Black Gold</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,500&family=Cinzel:wght@500;700&family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/base.css">
+<style>
+/* 09 Black Gold: luxury black, art-deco line work, gold foil. */
+div[data-bind] { display: block; }
+:root {
+  --gold: #d8b36a; --gold-hi: #f6e4ae; --gold-lo: #8c6a2e; --ink: #f5efe2; --dim: #a39580;
+  --foil: linear-gradient(100deg, #8c6a2e 0%, #f6e27a 18%, #b88a2e 36%, #fff3c4 50%, #a67c2e 66%, #e8c96a 84%, #8c6a2e 100%);
+  --line: rgba(216,179,106,.55);
+}
+.aa-stage {
+  background:
+    radial-gradient(900px 620px at 72% 45%, rgba(216,179,106,.16), transparent 70%),
+    repeating-conic-gradient(from -90deg at 50% 118%, rgba(216,179,106,.05) 0 2deg, transparent 2deg 6deg),
+    radial-gradient(1400px 900px at 50% 40%, #16120c, #070605 75%);
+  color: var(--ink); font-family: Inter, system-ui, sans-serif;
+}
+/* Double deco frame with stepped corners */
+.frame { position: absolute; inset: 28px; border: 1px solid var(--line); pointer-events: none; }
+.frame::before { content: ""; position: absolute; inset: 8px; border: 2px solid rgba(216,179,106,.3); }
+.corner { position: absolute; width: 90px; height: 90px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 90 90' fill='none' stroke='%23d8b36a' stroke-width='2'%3E%3Cpath d='M2 60V2h58M14 48V14h34M26 36V26h10'/%3E%3Cpath d='M2 2l30 30' stroke-width='1'/%3E%3C/svg%3E") no-repeat; }
+.corner.tl { left: 36px; top: 36px; }
+.corner.tr { right: 36px; top: 36px; transform: scaleX(-1); }
+.corner.bl { left: 36px; bottom: 36px; transform: scaleY(-1); }
+.corner.br { right: 36px; bottom: 36px; transform: scale(-1); }
+
+.foil {
+  background: var(--foil); background-size: 250% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: bg-foil 7s ease-in-out infinite alternate;
+}
+
+/* Header */
+.head { position: absolute; left: 110px; right: 110px; top: 66px; height: 110px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; }
+.head .brand { width: 120px; height: 100px; object-fit: contain; }
+.tourn { display: flex; align-items: center; gap: 22px; }
+.tourn img { width: 92px; height: 92px; object-fit: contain; }
+.tourn .n { font-family: Cinzel, serif; font-weight: 700; font-size: 34px; letter-spacing: .06em; line-height: 1.1; }
+.tourn .s { font: 600 15px Inter; letter-spacing: .34em; text-transform: uppercase; color: var(--gold); margin-top: 6px; }
+.spon { justify-self: end; display: flex; align-items: center; gap: 18px; text-align: right; }
+.spon .l { font: 600 13px Inter; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); }
+.spon .n { font-family: Cinzel; font-weight: 700; font-size: 22px; letter-spacing: .06em; margin-top: 4px; }
+.spon img { height: 64px; width: auto; }
+.rule { position: absolute; left: 110px; right: 110px; top: 190px; height: 12px;
+  background:
+    linear-gradient(var(--line), var(--line)) 0 0 / 100% 1px no-repeat,
+    linear-gradient(var(--line), var(--line)) 0 100% / 100% 1px no-repeat; }
+.rule::after { content: ""; position: absolute; left: 50%; top: 50%; width: 14px; height: 14px; margin: -7px; background: var(--gold); transform: rotate(45deg); box-shadow: 0 0 0 6px #0d0b08, 0 0 0 7px var(--line); }
+
+/* Player in a deco arch */
+.arch {
+  position: absolute; left: 1230px; top: 226px; width: 540px; height: 560px;
+  border-radius: 270px 270px 0 0; overflow: hidden;
+  background:
+    radial-gradient(360px 320px at 50% 40%, rgba(246,228,174,.22), transparent 70%),
+    repeating-conic-gradient(from -90deg at 50% 100%, rgba(216,179,106,.12) 0 3deg, transparent 3deg 9deg),
+    #120e08;
+  box-shadow: inset 0 0 0 2px var(--gold), inset 0 0 0 12px #0c0a07, inset 0 0 0 13px var(--line);
+}
+.arch img {
+  position: absolute; left: 30px; right: 30px; bottom: 0; height: 520px; width: 480px;
+  object-fit: contain; object-position: center bottom;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
+}
+.arch::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 2px var(--gold); pointer-events: none; }
+.plinth { position: absolute; left: 1210px; width: 580px; top: 786px; height: 14px; background: var(--foil); background-size: 250% 100%; animation: bg-foil 7s ease-in-out infinite alternate; }
+
+/* Name and stats */
+.who { position: absolute; left: 118px; top: 232px; width: 1060px; }
+.who .grade { display: flex; align-items: center; gap: 16px; font-family: Cinzel; font-weight: 700; font-size: 22px; letter-spacing: .36em; text-transform: uppercase; color: var(--gold); }
+.grade::before, .grade::after { content: ""; width: 60px; height: 1px; background: var(--gold); }
+.first { font-family: "Playfair Display", serif; font-style: italic; font-weight: 500; font-size: 58px; line-height: 1; margin-top: 18px; color: var(--ink); }
+.last { font-family: "Playfair Display", serif; font-weight: 900; font-size: 150px; line-height: .92; letter-spacing: .01em; text-transform: uppercase; }
+.meta { display: flex; gap: 30px; margin-top: 16px; font: 500 20px Inter; color: var(--dim); }
+.meta b { color: var(--ink); font-weight: 700; }
+.meta span + span::before { content: "◆"; color: var(--gold); font-size: 11px; margin-right: 30px; vertical-align: 4px; }
+.stats { position: absolute; left: 118px; top: 596px; width: 1060px; display: grid; grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.stat { padding: 16px 22px 14px; border-left: 1px solid rgba(216,179,106,.22); }
+.stat:nth-child(4n+2) { border-left: 0; padding-left: 0; }
+.stat:nth-child(n+6) { border-top: 1px solid rgba(216,179,106,.22); }
+.stat .v { display: block; font-family: "Playfair Display"; font-weight: 700; font-size: 46px; line-height: 1.05; font-variant-numeric: lining-nums; }
+.stat .l { display: block; font: 600 13px Inter; letter-spacing: .24em; text-transform: uppercase; color: var(--gold); margin-top: 2px; }
+
+/* Bottom band: team, bid, pool */
+.band { position: absolute; left: 110px; right: 110px; top: 818px; height: 214px; display: grid; grid-template-columns: 470px 1fr 400px; align-items: center;
+  border-top: 1px solid var(--line); }
+.team { display: flex; align-items: center; gap: 22px; }
+.team img { width: 112px; height: 112px; object-fit: contain; }
+.lab { font: 600 13px Inter; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); }
+.team .n { font-family: Cinzel; font-weight: 700; font-size: 32px; line-height: 1.1; margin-top: 4px; }
+.team .mx { margin-top: 10px; display: flex; align-items: baseline; gap: 14px; }
+.team .mx .v { font-family: "Playfair Display"; font-weight: 700; font-size: 38px; }
+.bid { text-align: center; position: relative; }
+.bid .lab { display: flex; align-items: center; justify-content: center; gap: 18px; font-size: 16px; }
+.bid .lab::before, .bid .lab::after { content: ""; width: 70px; height: 1px; background: var(--gold); }
+.fig { display: flex; justify-content: center; align-items: baseline; gap: 18px; margin-top: 4px; }
+.amt { font-family: "Playfair Display", serif; font-weight: 900; font-size: 196px; line-height: .86; letter-spacing: -.01em; font-variant-numeric: lining-nums;
+  filter: drop-shadow(0 6px 24px rgba(216,179,106,.35)); }
+.unit { font-family: Cinzel; font-weight: 700; font-size: 64px; }
+.amt.aa-bump { animation: bg-foil 7s ease-in-out infinite alternate, bg-bump .8s cubic-bezier(.2,.9,.3,1.25); }
+.pool { justify-self: end; width: 380px; }
+.pool .row { display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; margin-top: 12px; }
+.pool .row > div + div { border-left: 1px solid rgba(216,179,106,.25); }
+.pool .k { font-family: "Playfair Display"; font-weight: 700; font-size: 50px; line-height: 1; }
+.pool .t { font: 600 12px Inter; letter-spacing: .22em; text-transform: uppercase; color: var(--dim); margin-top: 6px; }
+.pool .lab { text-align: center; }
+.meter { height: 3px; background: rgba(216,179,106,.18); margin-top: 16px; }
+.meter i { display: block; height: 100%; width: calc(var(--aa-sold-pct, 0) * 1%); background: var(--foil); background-size: 250% 100%; transition: width .6s; }
+
+@keyframes bg-foil { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
+@keyframes bg-bump {
+  0% { transform: scale(1); filter: drop-shadow(0 6px 24px rgba(216,179,106,.35)); }
+  35% { transform: scale(1.09); filter: drop-shadow(0 0 50px rgba(246,228,174,.9)) brightness(1.35); }
+  100% { transform: scale(1); filter: drop-shadow(0 6px 24px rgba(216,179,106,.35)); }
+}
+</style>
+</head>
+<body>
+<div class="aa-stage">
+  <div class="frame"></div>
+  <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+
+  <header class="head">
+    <img class="brand" data-src="brand.logo" alt="">
+    <div class="tourn">
+      <img data-src="tournament.logo" alt="">
+      <div><div class="n" data-bind="tournament.name"></div><div class="s" data-bind="tournament.season"></div></div>
+    </div>
+    <div class="spon">
+      <div><div class="l" data-bind="sponsor.label"></div><div class="n" data-bind="sponsor.name"></div></div>
+      <img data-src="sponsor.logo" alt="">
+    </div>
+  </header>
+  <div class="rule"></div>
+
+  <section class="who">
+    <div class="grade" data-bind="player.grade"></div>
+    <div class="first" data-bind="player.first"></div>
+    <div class="last foil" data-bind="player.last"></div>
+    <div class="meta"><span data-bind="player.role"></span><span>Age <b data-bind="player.age"></b></span><span data-bind="player.style"></span></div>
+  </section>
+  <div class="stats" data-stats="player.stats">
+    <template><div class="stat"><span class="v" data-stat="value"></span><span class="l" data-stat="label"></span></div></template>
+  </div>
+
+  <div class="arch"><img data-src="player.photo" alt=""></div>
+  <div class="plinth"></div>
+
+  <section class="band">
+    <div class="team">
+      <img data-src="team.logo" alt="">
+      <div>
+        <div class="lab">Bidding Team</div>
+        <div class="n" data-bind="team.name"></div>
+        <div class="mx"><span class="lab">Max Bid</span><span class="v foil" data-bind="team.maxBid"></span></div>
+      </div>
+    </div>
+    <div class="bid">
+      <div class="lab">Current Bid</div>
+      <div class="fig"><span class="amt foil" data-bind="bid.amount"></span><span class="unit foil" data-bind="bid.unit"></span></div>
+    </div>
+    <div class="pool">
+      <div class="lab">Player Pool</div>
+      <div class="row">
+        <div><div class="k" data-bind="status.available"></div><div class="t">Available</div></div>
+        <div><div class="k foil" data-bind="status.sold"></div><div class="t">Sold</div></div>
+        <div><div class="k" data-bind="status.unsold"></div><div class="t">Unsold</div></div>
+      </div>
+      <div class="meter"><i></i></div>
+    </div>
+  </section>
+</div>
+<script src="../shared/data.js"></script><script src="../shared/aa.js"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <circle cx="100" cy="100" r="96" fill="#1c1733"/>
+  <circle cx="100" cy="100" r="86" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="6 6"/>
+  <path d="M100 40 150 72v24H50V72Z" fill="#c0392b"/>
+  <path d="m58 150 84-92M142 150 58 58" stroke="#fff" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="100" cy="146" r="12" fill="#c0392b" stroke="#fff" stroke-width="3"/>
+  <rect x="34" y="92" width="132" height="30" rx="6" fill="#1c1733" stroke="#fff" stroke-width="3"/>
+  <text x="100" y="114" text-anchor="middle" font-family="Poppins, Arial, sans-serif" font-weight="800" font-size="18" fill="#fff" letter-spacing="1.5">MEENA SPORTS</text>
+</svg>

@@ -1,0 +1,31 @@
+/* Shared base for every Auction Arena template: fixed 1920x1080 broadcast
+   canvas, centred and scaled by shared/aa.js. Templates own everything else. */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
+body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+img { display: block; max-width: 100%; }
+
+.aa-stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  transform-origin: center center;
+  transform: translate(-50%, -50%) scale(0.5);
+}
+
+/* Value-change pulse, triggered by aa.js. Templates may override. */
+.aa-bump { animation: aa-bump 0.6s cubic-bezier(.2, .9, .3, 1.4); }
+@keyframes aa-bump {
+  0% { transform: scale(1); filter: brightness(1); }
+  35% { transform: scale(1.12); filter: brightness(1.6); }
+  100% { transform: scale(1); filter: brightness(1); }
+}
+/* Inline values that pulse need an inline-block box to scale; divs stay block. */
+:where(span[data-bind]) { display: inline-block; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+}

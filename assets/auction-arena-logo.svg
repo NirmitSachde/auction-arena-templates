@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" fill="none">
+  <path d="M96 20 34 150h30l12-28h58l12 28h30L112 20H96Zm-8 76 16-40 17 40H88Z" fill="#fff"/>
+  <path d="M150 30v70M150 30l22 8-22 8" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="120" y="178" text-anchor="middle" font-family="Poppins, Arial, sans-serif" font-weight="800" font-size="22" letter-spacing="3" fill="#fff">AUCTION</text>
+  <text x="120" y="198" text-anchor="middle" font-family="Poppins, Arial, sans-serif" font-weight="800" font-size="18" letter-spacing="5" fill="#fff">ARENA</text>
+</svg>

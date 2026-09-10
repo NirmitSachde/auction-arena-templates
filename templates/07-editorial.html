@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Auction Arena · 07 Editorial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@500;600;700;800;900&family=Playfair+Display:ital,wght@1,600;1,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/base.css">
+<style>
+/* 07 Editorial: magazine cover. Paper, ink, one hot-orange accent. */
+div[data-bind] { display: block; }
+:root { --ink: #0c0c0c; --paper: #f1eee6; --hot: #ff4a0a; --mute: #6b675e; }
+
+.aa-stage {
+  background:
+    radial-gradient(1200px 700px at 50% 38%, rgba(255,255,255,.7), transparent 70%),
+    repeating-linear-gradient(0deg, rgba(0,0,0,.018) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, #f4f1ea, #e9e5db);
+  color: var(--ink);
+  font-family: Inter, system-ui, sans-serif;
+}
+/* Faint column guides, like a layout grid left on the proof */
+.aa-stage::before {
+  content: ""; position: absolute; inset: 120px 64px 80px;
+  background: repeating-linear-gradient(90deg, rgba(0,0,0,.035) 0 1px, transparent 1px 149px);
+  pointer-events: none;
+}
+
+/* Masthead */
+.mast {
+  position: absolute; left: 64px; right: 64px; top: 0; height: 120px;
+  display: flex; align-items: center; gap: 28px;
+  border-bottom: 4px solid var(--ink);
+}
+.mast .t-logo { width: 78px; height: 78px; object-fit: contain; }
+.mast .t-name { font-weight: 900; font-size: 30px; letter-spacing: .02em; text-transform: uppercase; line-height: 1; }
+.mast .t-season { font-weight: 600; font-size: 16px; letter-spacing: .22em; text-transform: uppercase; color: var(--mute); margin-top: 8px; }
+.mast .issue {
+  margin-left: auto; font-family: "Playfair Display", serif; font-style: italic; font-weight: 600;
+  font-size: 30px; display: flex; align-items: center; gap: 16px;
+}
+.live { display: inline-flex; align-items: center; gap: 10px; font: 800 15px Inter; letter-spacing: .24em; color: var(--hot); font-style: normal; }
+.live i { width: 12px; height: 12px; border-radius: 50%; background: var(--hot); animation: ed-blink 1.6s ease-in-out infinite; }
+.mast .brand { background: var(--ink); width: 104px; height: 90px; display: grid; place-items: center; margin-left: 28px; }
+.mast .brand img { width: 84px; height: 70px; object-fit: contain; }
+
+/* Giant surname behind the player */
+.surname {
+  position: absolute; left: 0; right: 0; top: 112px; text-align: center;
+  font-family: "Bebas Neue", Impact, sans-serif; font-size: 560px; line-height: .86;
+  letter-spacing: -.005em; white-space: nowrap; color: var(--ink);
+}
+.surname span { display: inline-block; }
+.number {
+  position: absolute; left: 64px; top: 150px; font-family: "Bebas Neue"; font-size: 38px; letter-spacing: .12em;
+  color: var(--hot); writing-mode: vertical-rl; transform: rotate(180deg);
+}
+
+/* Player cut-out */
+.player {
+  position: absolute; left: 610px; width: 700px; bottom: 80px; height: 860px;
+  object-fit: contain; object-position: center bottom;
+  -webkit-mask-image: linear-gradient(transparent 12%, #000 30%), linear-gradient(90deg, transparent 4%, #000 24%, #000 76%, transparent 96%);
+  -webkit-mask-composite: source-in;
+          mask-image: linear-gradient(transparent 12%, #000 30%), linear-gradient(90deg, transparent 4%, #000 24%, #000 76%, transparent 96%);
+          mask-composite: intersect;
+  filter: drop-shadow(0 30px 40px rgba(0,0,0,.25));
+}
+
+/* Left: cover lines */
+.lines { position: absolute; left: 64px; top: 612px; width: 560px; }
+.kick { display: flex; align-items: center; gap: 14px; }
+.grade { background: var(--hot); color: #fff; font: 900 18px Inter; letter-spacing: .2em; text-transform: uppercase; padding: 8px 14px 7px; }
+.kick .role { font: 800 18px Inter; letter-spacing: .2em; text-transform: uppercase; }
+.fullname { font-family: "Playfair Display", serif; font-style: italic; font-weight: 800; font-size: 46px; line-height: 1.05; margin-top: 14px; }
+.meta { font: 600 17px Inter; color: var(--mute); margin-top: 8px; letter-spacing: .01em; }
+.meta b { color: var(--ink); font-weight: 800; }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 22px; border-top: 3px solid var(--ink); }
+.stat { padding: 10px 0 8px; border-bottom: 1px solid rgba(0,0,0,.2); }
+.stat:nth-child(n+6) { border-bottom: 0; }
+.stat .v { display: block; font-family: "Bebas Neue"; font-size: 58px; line-height: .95; }
+.stat .l { display: block; font: 700 12px Inter; letter-spacing: .16em; text-transform: uppercase; color: var(--mute); }
+
+/* Right: the bid as the headline number */
+.bid { position: absolute; left: 1300px; right: 64px; top: 596px; }
+.bid .cap { display: flex; align-items: center; gap: 14px; font: 900 20px Inter; letter-spacing: .28em; text-transform: uppercase; }
+.bid .cap::after { content: ""; flex: 1; height: 3px; background: var(--ink); }
+.bid .fig { display: flex; align-items: flex-start; margin-top: 4px; }
+.amt {
+  font-family: "Bebas Neue", Impact, sans-serif; font-size: 272px; line-height: .84; color: var(--hot);
+  letter-spacing: -.01em; transform-origin: left bottom;
+}
+.unit { font-family: "Bebas Neue"; font-size: 96px; line-height: 1; margin: 18px 0 0 14px; }
+.amt.aa-bump { animation: ed-bump .7s cubic-bezier(.2,.9,.3,1.3); }
+
+.team { display: flex; align-items: center; gap: 18px; margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(0,0,0,.25); }
+.team img { width: 76px; height: 76px; object-fit: contain; }
+.team .by { font: 700 13px Inter; letter-spacing: .22em; text-transform: uppercase; color: var(--mute); }
+.team .name { font: 900 30px Inter; line-height: 1.1; text-transform: uppercase; }
+.team .max { margin-left: auto; text-align: right; }
+.team .max .v { font-family: "Bebas Neue"; font-size: 54px; line-height: .9; }
+
+/* Footer rail */
+.foot {
+  position: absolute; left: 64px; right: 64px; bottom: 0; height: 80px;
+  border-top: 4px solid var(--ink); display: flex; align-items: center; gap: 36px;
+}
+.cnt { display: flex; align-items: baseline; gap: 10px; }
+.cnt .v { font-family: "Bebas Neue"; font-size: 44px; line-height: 1; }
+.cnt .l { font: 700 13px Inter; letter-spacing: .2em; text-transform: uppercase; color: var(--mute); }
+.cnt.sold .v { color: var(--hot); }
+.bar { width: 300px; height: 6px; background: rgba(0,0,0,.14); }
+.bar i { display: block; height: 100%; width: calc(var(--aa-sold-pct, 0) * 1%); background: var(--ink); transition: width .6s; }
+.spon { margin-left: auto; display: flex; align-items: center; gap: 16px; }
+.spon .l { font: 700 13px Inter; letter-spacing: .2em; text-transform: uppercase; color: var(--mute); text-align: right; }
+.spon .n { font: 900 20px Inter; text-transform: uppercase; display: block; color: var(--ink); letter-spacing: .04em; }
+.spon img { height: 58px; width: auto; }
+
+@keyframes ed-blink { 50% { opacity: .25; } }
+@keyframes ed-bump {
+  0% { transform: scale(1); color: var(--hot); }
+  30% { transform: scale(1.08) skewX(-4deg); color: var(--ink); }
+  100% { transform: scale(1); color: var(--hot); }
+}
+</style>
+</head>
+<body>
+<div class="aa-stage">
+  <header class="mast">
+    <img class="t-logo" data-src="tournament.logo" alt="">
+    <div>
+      <div class="t-name" data-bind="tournament.name"></div>
+      <div class="t-season" data-bind="tournament.season"></div>
+    </div>
+    <div class="issue"><span class="live"><i></i>LIVE</span>The Auction Issue</div>
+    <div class="brand"><img data-src="brand.logo" alt=""></div>
+  </header>
+
+  <div class="surname"><span data-bind="player.last"></span></div>
+  <div class="number">NO. <span data-bind="player.number"></span></div>
+  <img class="player" data-src="player.photo" alt="">
+
+  <section class="lines">
+    <div class="kick"><span class="grade" data-bind="player.grade"></span><span class="role" data-bind="player.role"></span></div>
+    <div class="fullname" data-bind="player.name"></div>
+    <div class="meta">Age <b data-bind="player.age"></b> &nbsp;·&nbsp; <span data-bind="player.style"></span></div>
+    <div class="stats" data-stats="player.stats">
+      <template><div class="stat"><span class="v" data-stat="value"></span><span class="l" data-stat="label"></span></div></template>
+    </div>
+  </section>
+
+  <section class="bid">
+    <div class="cap">Current Bid</div>
+    <div class="fig"><span class="amt" data-bind="bid.amount"></span><span class="unit" data-bind="bid.unit"></span></div>
+    <div class="team">
+      <img data-src="team.logo" alt="">
+      <div><div class="by">Bidding</div><div class="name" data-bind="team.name"></div></div>
+      <div class="max"><div class="by">Max Bid</div><div class="v" data-bind="team.maxBid"></div></div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <div class="cnt"><span class="v" data-bind="status.available"></span><span class="l">Available</span></div>
+    <div class="cnt sold"><span class="v" data-bind="status.sold"></span><span class="l">Sold</span></div>
+    <div class="cnt"><span class="v" data-bind="status.unsold"></span><span class="l">Unsold</span></div>
+    <div class="bar"><i></i></div>
+    <div class="spon">
+      <div class="l"><span data-bind="sponsor.label"></span><span class="n" data-bind="sponsor.name"></span></div>
+      <img data-src="sponsor.logo" alt="">
+    </div>
+  </footer>
+</div>
+<script src="../shared/data.js"></script><script src="../shared/aa.js"></script>
+</body>
+</html>

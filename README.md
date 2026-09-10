@@ -2,6 +2,20 @@
 
 15 broadcast-grade layouts for the live auction main screen. Each is a single HTML file with its own CSS, drawn on a fixed 1920x1080 canvas that scales to any monitor.
 
+**Live gallery:** https://nirmitsachde.github.io/auction-arena-templates/
+
+![All 15 templates](screenshots/overview.png)
+
+## Structure
+
+- `index.html`: gallery linking every template
+- `templates/NN-name.html`: the 15 templates (plain HTML + CSS, no build step)
+- `shared/`: data payload, tiny runtime, base stylesheet
+- `assets/`: placeholder logos and player image
+- `screenshots/`: 1920x1080 render of each template
+
+Run locally by opening `index.html` in any modern browser. MIT licensed.
+
 ## How it works
 
 - `shared/data.js`: the one live payload (tournament, sponsor, player, stats, status counts, bid, team). Every template reads only from this.

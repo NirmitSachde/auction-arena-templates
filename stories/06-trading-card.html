@@ -30,7 +30,7 @@
 .chip { position: absolute; right: 40px; top: 44px; padding: 10px 22px; border-radius: 12px; background: #1b1203; color: var(--g2); font-weight: 900; font-size: 28px; letter-spacing: 6px; }
 .name { position: absolute; left: 30px; right: 30px; top: 780px; text-align: center; font-family: Oswald, sans-serif; font-weight: 700; font-size: 80px; line-height: 1.12; text-transform: uppercase; }
 .bar { position: absolute; left: 70px; right: 70px; top: 885px; height: 3px; background: rgba(42,28,4,.35); }
-.stats { position: absolute; left: 60px; right: 60px; top: 910px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px 30px; }
+.stats { position: absolute; left: 60px; right: 60px; top: 910px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: 18px 30px; }
 .stats .k { font-size: 20px; font-weight: 900; letter-spacing: 4px; opacity: .65; }
 .stats .v { font-family: Oswald, sans-serif; font-weight: 700; font-size: 46px; line-height: 1.05; text-transform: uppercase; white-space: nowrap; }
 .stats .wide { grid-column: 1 / -1; padding-top: 14px; border-top: 3px solid rgba(42,28,4,.35); text-align: center; }
@@ -50,11 +50,11 @@
     <div class="fade"></div>
     <div class="corner"><div class="r" data-bind="player.role"></div><img data-src="team.logo" alt=""></div>
     <div class="chip">SOLD</div>
-    <div class="name" data-bind="player.name"></div>
+    <div class="name" data-bind="player.name" data-fit></div>
     <div class="bar"></div>
     <div class="stats">
-      <div><div class="k">BASE</div><div class="v" data-bind="player.base"></div></div>
-      <div><div class="k">TEAM</div><div class="v" data-bind="team.name"></div></div>
+      <div><div class="k">BASE</div><div class="v" data-bind="player.base" data-fit></div></div>
+      <div><div class="k">TEAM</div><div class="v" data-bind="team.name" data-fit></div></div>
       <div class="wide"><div class="k">SOLD FOR</div><div class="v" data-bind="bid.points"></div></div>
     </div>
   </div></div>

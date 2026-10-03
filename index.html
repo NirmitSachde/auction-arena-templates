@@ -19,7 +19,11 @@
   a.card { display: block; text-decoration: none; color: inherit; background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; transition: transform .2s, border-color .2s; }
   a.card:hover { transform: translateY(-4px); border-color: var(--acc); }
   .thumb { aspect-ratio: 16 / 9; background: #000; position: relative; overflow: hidden; }
-  .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  h2.sec { font-size: 22px; font-weight: 800; margin: 56px 0 6px; letter-spacing: -0.01em; }
+  h2.sec + p.sub { margin-bottom: 24px; }
+  .grid.tall { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+  .grid.tall .thumb { aspect-ratio: 9 / 16; }
+  .thumb img { position: relative; width: 100%; height: 100%; object-fit: cover; display: block; }
   .thumb span { position: absolute; inset: 0; display: grid; place-items: center; color: var(--mute); font-size: 14px; }
   .meta { padding: 14px 18px 18px; }
   .meta b { color: var(--acc); font-size: 13px; margin-right: 8px; }
@@ -31,6 +35,14 @@
 <header><img src="assets/auction-arena-logo.svg" alt=""><h1>Auction Arena · Main Display Templates</h1></header>
 <p class="sub">15 broadcast layouts, 1920x1080, all driven by <code>shared/data.js</code>. On any template press <kbd>Space</kbd> to raise the bid, <kbd>T</kbd> to switch team, <kbd>F11</kbd> for fullscreen.</p>
 <div class="grid" id="grid"></div>
+
+<h2 class="sec">YouTube live overlays</h2>
+<p class="sub">Transparent 1920x1080 pages for an OBS / vMix browser source, drawn over the camera. The gallery opens them with a sample camera frame; press <kbd>B</kbd> to toggle it, <kbd>S</kbd> / <kbd>U</kbd> / <kbd>L</kbd> for sold, unsold and live.</p>
+<div class="grid" id="overlays"></div>
+
+<h2 class="sec">Story player cards</h2>
+<p class="sub">Phone-size 1080x1920 cards for Instagram and WhatsApp stories. Each page has a <b>Download PNG</b> button that saves the card at full size.</p>
+<div class="grid tall" id="stories"></div>
 <script>
   const T = [
     ["01", "bento-noir", "Bento Noir", "Keynote bento grid, electric lime, hero bid tile."],
@@ -54,6 +66,30 @@
       <div class="thumb"><span>Preview</span><img src="screenshots/${n}-${slug}.png" alt="" onerror="this.remove()"></div>
       <div class="meta"><b>${n}</b><h2>${name}</h2><p>${d}</p></div>
     </a>`).join("");
+
+  const O = [
+    ["01", "royal-ribbon", "Royal Ribbon", "IPL-style navy and gold lower third, photo medallion."],
+    ["02", "glass-dock", "Glass Dock", "One floating frosted pill, lime live bid."],
+    ["03", "side-rail", "Side Rail", "Esports rail down the left edge in the team's colour."],
+    ["04", "neon-strike", "Neon Strike", "Cyberpunk HUD bars, cyan and magenta glow."],
+    ["05", "score-strip", "Score Strip", "Cricket TV scorebug plus ticker; covers the least."],
+    ["06", "team-flood", "Team Flood", "Bidding team's colour floods the bid block."]
+  ];
+  const S = [
+    ["01", "gold-rush", "Gold Rush", "Black-tie gold, arched portrait."],
+    ["02", "stadium-night", "Stadium Night", "Floodlights, team-edged photo card."],
+    ["03", "team-colours", "Team Colours", "\"Welcome to\" card in the team's colour."],
+    ["04", "magazine", "Magazine", "Cover of the week, giant surname."],
+    ["05", "neon-pulse", "Neon Pulse", "Synthwave sun and neon ring."],
+    ["06", "trading-card", "Trading Card", "Gold collectible card."]
+  ];
+  const cards = (list, dir, q) => list.map(([n, slug, name, d]) => `
+    <a class="card" href="${dir}/${n}-${slug}.html${q}">
+      <div class="thumb"><span>Preview</span><img src="screenshots/${dir}/${n}-${slug}.png" alt="" onerror="this.remove()"></div>
+      <div class="meta"><b>${n}</b><h2>${name}</h2><p>${d}</p></div>
+    </a>`).join("");
+  document.getElementById("overlays").innerHTML = cards(O, "overlays", "?preview");
+  document.getElementById("stories").innerHTML = cards(S, "stories", "");
 </script>
 </body>
 </html>

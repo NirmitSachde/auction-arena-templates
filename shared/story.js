@@ -1,5 +1,6 @@
 /* Story card download: renders the 1080x1920 stage to a PNG with html2canvas
-   at 1:1, ignoring the on-screen scale. Loaded only by stories/. */
+   at 1:1, ignoring the on-screen scale. Used by stories/ and inlined into the
+   Blade story views by tools/build-blade.mjs. */
 (function () {
   const SRC = "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";
   let lib;
@@ -24,7 +25,7 @@
         }
       });
       const a = document.createElement("a");
-      const name = (window.AUCTION.player.name || "player").replace(/\W+/g, "-").toLowerCase();
+      const name = playerName().replace(/\W+/g, "-").toLowerCase() || "player";
       a.download = `${name}-story.png`;
       a.href = canvas.toDataURL("image/png");
       a.click();
@@ -33,8 +34,26 @@
     }
   }
 
-  window.AAStory = { download, load };
+  function playerName() {
+    const t = (k) => (document.querySelector(`[data-bind="${k}"]`) || {}).textContent || "";
+    return (t("player.name") || `${t("player.first")} ${t("player.last")}`).trim();
+  }
+
+  /* [data-fit] text stays on one line: shrink it until it fits its box. */
+  function fit() {
+    document.querySelectorAll("[data-fit]").forEach((el) => {
+      el.style.fontSize = "";
+      let size = parseFloat(getComputedStyle(el).fontSize);
+      const min = size * 0.4;
+      while (el.scrollWidth > el.clientWidth + 1 && size > min) el.style.fontSize = (size -= 2) + "px";
+    });
+  }
+
+  window.AAStory = { download, load, fit };
+  document.fonts.ready.then(fit);
   document.addEventListener("DOMContentLoaded", () => {
+    fit();
+    new MutationObserver(fit).observe(document.querySelector(".aa-stage"), { subtree: true, characterData: true, childList: true });
     const btn = document.createElement("button");
     btn.className = "st-download";
     btn.textContent = "DOWNLOAD PNG";

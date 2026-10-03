@@ -16,3 +16,6 @@ html, body { background: #0b0d12; }
 }
 .st-download[disabled] { opacity: .6; cursor: progress; }
 .aa-capture *, .aa-capture *::before, .aa-capture *::after { animation: none !important; transition: none !important; }
+
+/* Names stay on one line; story.js shrinks [data-fit] text to its box. */
+[data-fit] { white-space: nowrap; }

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Auction Arena · Overlay 03 Side Rail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/overlay.css">
+<style>
+/* Overlay 03 Side Rail: esports-style vertical rail down the left edge. Keeps 3/4 of the frame clear for the camera; the bidding team's colour runs down the spine. */
+:root { --bg: rgba(9,11,18,.92); --bg2: rgba(20,24,36,.92); --ink: #fff; --mute: #98a2b8; --team: #e11d48; }
+.aa-stage { font-family: Barlow, sans-serif; color: var(--ink); --ov-strip-font: "Barlow Condensed", sans-serif; --ov-stamp-font: "Barlow Condensed", sans-serif; }
+.rail { position: absolute; left: 40px; top: 40px; width: 430px; padding-bottom: 22px; display: flex; flex-direction: column; background: var(--bg); border-radius: 18px; overflow: hidden;
+  box-shadow: 0 30px 70px rgba(0,0,0,.55); animation: slide .7s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes slide { from { transform: translateX(-110%); } }
+.rail::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 8px; background: var(--team); transition: background .4s; z-index: 2; }
+.hd { display: flex; align-items: center; gap: 14px; padding: 20px 22px 18px 30px; background: var(--bg2); }
+.hd img { width: 54px; height: 54px; object-fit: contain; }
+.hd .t { font-family: "Barlow Condensed", sans-serif; font-weight: 700; font-size: 26px; line-height: 1.05; text-transform: uppercase; letter-spacing: .5px; }
+.hd .live { margin-left: auto; color: #ff4d5e; font-weight: 800; font-size: 14px; letter-spacing: 2px; }
+.ph { position: relative; height: 480px; margin: 0 0 0 8px; background: #151a28 center top / cover no-repeat; }
+.ph img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+.ph::after { z-index: 0; content: ""; position: absolute; inset: 45% 0 0 0; background: linear-gradient(180deg, transparent, rgba(9,11,18,.85) 60%, rgb(9,11,18)); }
+.ph .ov-stamp { left: 50%; top: 30%; margin-left: -80px; font-size: 44px; }
+.nm { position: absolute; left: 0; right: 0; bottom: 18px; padding: 0 22px 0 26px; z-index: 1; }
+.nm .tag { display: inline-block; padding: 4px 10px; background: var(--team); font-weight: 800; font-size: 13px; letter-spacing: 3px; text-transform: uppercase; transition: background .4s; }
+.nm .name { margin-top: 10px; font-family: "Barlow Condensed", sans-serif; font-weight: 800; font-size: 54px; line-height: .95; text-transform: uppercase; }
+.rows { margin: 22px 22px 0 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.row { background: var(--bg2); border-radius: 10px; padding: 12px 16px; }
+.k { font-size: 13px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--mute); }
+.v { font-family: "Barlow Condensed", sans-serif; font-size: 30px; font-weight: 700; text-transform: uppercase; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bid { margin: 12px 22px 0 30px; border-radius: 12px; padding: 16px 20px 14px; background: linear-gradient(135deg, var(--team), color-mix(in srgb, var(--team) 55%, #000)); transition: background .4s; }
+.bid .k { color: rgba(255,255,255,.8); }
+.bid .v { font-size: 64px; line-height: .95; font-variant-numeric: tabular-nums; margin-top: 4px; overflow: visible; }
+.team { margin: 18px 22px 0 30px; display: flex; align-items: center; gap: 14px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.1); }
+.team img { width: 60px; height: 60px; border-radius: 50%; background: #fff; padding: 5px; object-fit: contain; }
+.team .n { font-family: "Barlow Condensed", sans-serif; font-weight: 700; font-size: 28px; text-transform: uppercase; line-height: 1; }
+.team .k { font-size: 12px; }
+.mark { position: absolute; right: 48px; top: 40px; height: 64px; filter: drop-shadow(0 4px 10px rgba(0,0,0,.5)); }
+</style>
+</head>
+<body>
+<div class="aa-stage">
+  <div class="ov-strip"><div class="track"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
+  <img class="mark" data-src="brand.logo" alt="Auction Arena">
+  <aside class="rail">
+    <div class="hd"><img data-src="tournament.logo" alt=""><span class="t" data-bind="tournament.name"></span><span class="live ov-live">LIVE</span></div>
+    <div class="ph"><img data-src="player.photo" alt=""><div class="ov-stamp"></div>
+      <div class="nm"><span class="tag">On the block</span><div class="name" data-bind="player.name"></div></div>
+    </div>
+    <div class="rows">
+      <div class="row"><div class="k">Role</div><div class="v" data-bind="player.role"></div></div>
+      <div class="row"><div class="k">Base</div><div class="v" data-bind="player.base"></div></div>
+    </div>
+    <div class="bid"><div class="k">Current bid</div><div class="v" data-bind="bid.points"></div></div>
+    <div class="team"><img data-src="team.logo" alt=""><div><div class="k">Highest bidder</div><div class="n" data-bind="team.name"></div></div></div>
+  </aside>
+</div>
+<script src="../shared/data.js"></script>
+<script src="../shared/aa.js"></script>
+</body>
+</html>

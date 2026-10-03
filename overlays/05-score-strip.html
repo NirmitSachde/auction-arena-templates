@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Auction Arena · Overlay 05 Score Strip</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@600;700;800&family=Saira:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/overlay.css">
+<style>
+/* Overlay 05 Score Strip: cricket TV scorebug. One slim segmented strip plus a ticker; the least camera coverage of the set. */
+:root { --deep: #0b1d4d; --mid: #14306f; --hot: #ff2e63; --ink: #fff; --mute: #a9b8e0; }
+.aa-stage { font-family: Saira, sans-serif; color: var(--ink); --ov-strip-font: "Saira Condensed", sans-serif; --ov-stamp-font: "Saira Condensed", sans-serif; }
+.wrap { position: absolute; left: 60px; right: 60px; bottom: 40px; animation: up .6s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes up { from { transform: translateY(160px); } }
+.strip { display: flex; align-items: stretch; height: 92px; background: var(--deep); border-radius: 10px 10px 0 0; overflow: hidden; box-shadow: 0 18px 40px rgba(0,0,0,.5); }
+.strip > * { display: flex; align-items: center; }
+.tour { padding: 0 18px; background: #fff; }
+.tour img { width: 68px; height: 68px; object-fit: contain; }
+.ph { position: relative; width: 92px; flex: none; background: var(--mid); }
+.ph img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+.who { flex: 1; min-width: 0; padding: 0 24px; flex-direction: column; align-items: flex-start; justify-content: center; }
+.name { font-family: "Saira Condensed", sans-serif; font-weight: 800; font-size: 46px; line-height: 1; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.role { font-size: 15px; font-weight: 700; letter-spacing: 3px; color: var(--mute); text-transform: uppercase; margin-top: 4px; }
+.seg { flex: none; padding: 0 26px; flex-direction: column; align-items: flex-start; justify-content: center; background: var(--mid); border-left: 1px solid rgba(255,255,255,.08); }
+.k { font-size: 13px; font-weight: 700; letter-spacing: 3px; color: var(--mute); text-transform: uppercase; }
+.v { font-family: "Saira Condensed", sans-serif; font-weight: 700; font-size: 34px; line-height: 1; font-variant-numeric: tabular-nums; }
+.bid { flex: none; min-width: 360px; padding: 0 30px; flex-direction: column; align-items: flex-start; justify-content: center; background: var(--hot); }
+.bid .k { color: rgba(255,255,255,.85); }
+.bid .v { font-size: 56px; }
+.team { flex: none; padding: 0 22px 0 18px; gap: 12px; background: #fff; color: var(--deep); }
+.team img { width: 64px; height: 64px; object-fit: contain; }
+.team .n { max-width: 170px; font-family: "Saira Condensed", sans-serif; font-weight: 800; font-size: 24px; line-height: 1; text-transform: uppercase; }
+.ticker { height: 40px; display: flex; align-items: center; background: #fff; color: var(--deep); border-radius: 0 0 10px 10px; overflow: hidden; }
+.ticker .lab { flex: none; height: 100%; display: flex; align-items: center; padding: 0 18px; background: var(--hot); color: #fff; font-weight: 800; font-size: 15px; letter-spacing: 3px; }
+.ticker .vp { flex: 1; min-width: 0; overflow: hidden; }
+.ticker .run { display: flex; white-space: nowrap; animation: ov-marquee 40s linear infinite; }
+.ticker .run span { padding: 0 34px; font-weight: 700; font-size: 17px; letter-spacing: 1px; text-transform: uppercase; }
+.ticker .run span::after { content: "\25C6"; margin-left: 68px; color: var(--hot); }
+.ph .ov-stamp { left: -30px; top: -70px; font-size: 30px; }
+html[data-state="sold"] .bid { background: #16a34a; }
+html[data-state="unsold"] .bid { background: #6b7280; }
+.corner { position: absolute; top: 40px; right: 48px; display: flex; align-items: center; gap: 14px; }
+.corner .live { height: 40px; padding: 0 16px; background: var(--hot); font-weight: 800; font-size: 16px; letter-spacing: 3px; border-radius: 4px; }
+.corner img { height: 64px; }
+</style>
+</head>
+<body>
+<div class="aa-stage">
+  <div class="ov-strip"><div class="track"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
+  <div class="corner"><span class="live ov-live">LIVE</span><img data-src="brand.logo" alt="Auction Arena"></div>
+  <div class="wrap">
+    <div class="strip">
+      <div class="tour"><img data-src="tournament.logo" alt=""></div>
+      <div class="ph"><img data-src="player.photo" alt=""><div class="ov-stamp"></div></div>
+      <div class="who"><div class="name" data-bind="player.name"></div><div class="role" data-bind="player.role"></div></div>
+      <div class="seg"><span class="k">Base</span><span class="v" data-bind="player.base"></span></div>
+      <div class="bid"><span class="k">Current bid</span><span class="v" data-bind="bid.points"></span></div>
+      <div class="team"><img data-src="team.logo" alt=""><span class="n" data-bind="team.name"></span></div>
+    </div>
+    <div class="ticker"><span class="lab">AUCTION</span><div class="vp"><div class="run"><span data-bind="tournament.name"></span><span>Live player auction</span><span>Powered by Auction Arena</span><span data-bind="tournament.name"></span><span>Live player auction</span><span>Powered by Auction Arena</span><span data-bind="tournament.name"></span><span>Live player auction</span><span>Powered by Auction Arena</span><span data-bind="tournament.name"></span><span>Live player auction</span><span>Powered by Auction Arena</span></div></div></div>
+  </div>
+</div>
+<script src="../shared/data.js"></script>
+<script src="../shared/aa.js"></script>
+</body>
+</html>

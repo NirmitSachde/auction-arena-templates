@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Auction Arena · Story 01 Gold Rush</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Montserrat:wght@500;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/story.css">
+<style>
+/* Story 01 Gold Rush: black-tie luxury. Arched portrait in a gold frame, serif name, gold price plate, art-deco hairlines. */
+:root { --gold: #e8c46a; --gold2: #b8862b; --ink: #fff; --mute: #b9a985; }
+.aa-stage { font-family: Montserrat, sans-serif; color: var(--ink);
+  background: radial-gradient(ellipse 80% 45% at 50% 38%, rgba(232,196,106,.28), transparent 70%), radial-gradient(ellipse 120% 60% at 50% 110%, #2a1d07, transparent 60%), linear-gradient(180deg, #0b0905, #000 55%, #0d0a04); }
+.frame { position: absolute; inset: 40px; border: 2px solid rgba(232,196,106,.55); border-radius: 6px; }
+.frame::before { content: ""; position: absolute; inset: 14px; border: 1px solid rgba(232,196,106,.25); border-radius: 4px; }
+.top { position: absolute; left: 0; right: 0; top: 150px; text-align: center; }
+.top img { width: 120px; height: 120px; object-fit: contain; margin: 0 auto 18px; }
+.top .t { font-family: Cinzel, serif; font-weight: 700; font-size: 38px; letter-spacing: 6px; text-transform: uppercase; color: var(--gold); padding: 0 120px; line-height: 1.25; }
+.rule { width: 320px; height: 2px; margin: 22px auto 0; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+.arch { position: absolute; left: 50%; top: 470px; width: 640px; height: 780px; margin-left: -320px; border-radius: 320px 320px 18px 18px; padding: 10px;
+  background: linear-gradient(180deg, #fbe7a6, var(--gold) 40%, var(--gold2)); box-shadow: 0 0 120px rgba(232,196,106,.25); }
+.arch .st-photo { width: 100%; height: 100%; border-radius: 310px 310px 10px 10px; background-color: #1a140a; }
+.sold { position: absolute; left: 50%; top: 1170px; width: 360px; margin-left: -180px; padding: 16px 0; text-align: center; background: #000; border: 3px solid var(--gold);
+  font-family: Cinzel, serif; font-weight: 900; font-size: 54px; letter-spacing: 18px; color: var(--gold); text-indent: 18px; }
+.name { position: absolute; left: 60px; right: 60px; top: 1310px; text-align: center; font-family: Cinzel, serif; font-weight: 800; font-size: 76px; line-height: 1.05; text-transform: uppercase; letter-spacing: 2px; }
+.role { text-align: center; position: absolute; left: 0; right: 0; top: 1410px; font-size: 26px; font-weight: 700; letter-spacing: 10px; color: var(--mute); text-transform: uppercase; }
+.price { position: absolute; left: 140px; right: 140px; top: 1480px; height: 180px; display: flex; align-items: center; border-top: 2px solid var(--gold); border-bottom: 2px solid var(--gold); }
+.price .amt { flex: 1; text-align: center; }
+.price small { display: block; font-size: 22px; font-weight: 800; letter-spacing: 8px; color: var(--mute); }
+.price .v { font-family: Cinzel, serif; font-weight: 900; font-size: 84px; line-height: 1.1; color: var(--gold); }
+.price .tm { width: 170px; display: flex; flex-direction: column; align-items: center; gap: 8px; border-left: 1px solid rgba(232,196,106,.4); }
+.price .tm img { width: 96px; height: 96px; border-radius: 50%; background: #fff; padding: 6px; object-fit: contain; }
+.price .tm span { font-size: 17px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; text-align: center; color: var(--ink); }
+.foot { position: absolute; left: 0; right: 0; bottom: 92px; display: flex; justify-content: center; align-items: center; gap: 16px; font-size: 18px; font-weight: 700; letter-spacing: 5px; color: var(--mute); }
+.foot img { height: 56px; }
+</style>
+</head>
+<body>
+<div class="aa-stage" data-w="1080" data-h="1920">
+  <div class="frame"></div>
+  <div class="top"><img data-src="tournament.logo" alt=""><div class="t" data-bind="tournament.name"></div><div class="rule"></div></div>
+  <div class="arch"><div class="st-photo" data-bg="player.photo"></div></div>
+  <div class="sold">SOLD</div>
+  <div class="name" data-bind="player.name"></div>
+  <div class="role" data-bind="player.role"></div>
+  <div class="price">
+    <div class="amt"><small>SOLD FOR</small><div class="v" data-bind="bid.points"></div></div>
+    <div class="tm"><img data-src="team.logo" alt=""><span data-bind="team.name"></span></div>
+  </div>
+  <div class="foot">AUCTION PARTNER <img data-src="brand.logo" alt="Auction Arena"></div>
+</div>
+<script src="../shared/data.js"></script>
+<script src="../shared/aa.js"></script>
+<script src="../shared/story.js"></script>
+</body>
+</html>

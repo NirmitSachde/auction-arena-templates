@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Auction Arena · Story 03 Team Colours</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Inter:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/story.css">
+<style>
+/* Story 03 Team Colours: made for the buying team to repost. Their colour floods the card, "Welcome to" headline, crest watermark, round portrait. */
+:root { --team: #e11d48; --ink: #fff; }
+.aa-stage { font-family: Inter, sans-serif; color: var(--ink); background: var(--team); }
+.stripes { position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22140%22 height=%22140%22 viewBox=%220 0 140 140%22%3E%3Cpath d=%22M0 140L140 0V60L60 140Z M0 0H60L0 60Z%22 fill=%22%23fff%22 fill-opacity=%22.07%22/%3E%3C/svg%3E") 0 0 / 140px 140px repeat, linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.45)) 0 0 / 100% 100% no-repeat; }
+.crest { position: absolute; left: 50%; top: 820px; width: 1200px; height: 1200px; margin-left: -600px; object-fit: contain; opacity: .06; }
+.top { position: absolute; left: 80px; right: 80px; top: 150px; display: flex; align-items: center; justify-content: space-between; }
+.top .tour { display: flex; align-items: center; gap: 16px; font-size: 22px; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; max-width: 640px; }
+.top .tour img { width: 80px; height: 80px; object-fit: contain; background: #fff; border-radius: 50%; padding: 6px; }
+.top .done { padding: 10px 20px; border: 3px solid #fff; border-radius: 10px; font-weight: 900; font-size: 26px; letter-spacing: 6px; }
+.wel { position: absolute; left: 80px; right: 80px; top: 320px; }
+.wel small { font-size: 34px; font-weight: 800; letter-spacing: 12px; opacity: .9; }
+.wel .tn { font-family: Oswald, sans-serif; font-weight: 700; font-size: 136px; line-height: 1.05; text-transform: uppercase; margin-top: 10px; }
+.disc { position: absolute; left: 50%; top: 700px; width: 640px; height: 640px; margin-left: -320px; border-radius: 50%; padding: 14px; background: #fff; }
+.disc .st-photo { width: 100%; height: 100%; border-radius: 50%; background-color: #222; }
+.badge { position: absolute; left: 50%; top: 1260px; margin-left: 150px; width: 170px; height: 170px; border-radius: 50%; background: #fff; padding: 12px; }
+.badge img { width: 100%; height: 100%; object-fit: contain; }
+.name { position: absolute; left: 60px; right: 60px; top: 1400px; text-align: center; font-family: Oswald, sans-serif; font-weight: 700; font-size: 92px; line-height: 1.15; text-transform: uppercase; }
+.role { position: absolute; left: 0; right: 0; top: 1534px; text-align: center; font-size: 26px; font-weight: 800; letter-spacing: 8px; text-transform: uppercase; opacity: .9; }
+.price { position: absolute; left: 50%; top: 1596px; transform: translateX(-50%); display: flex; align-items: center; gap: 22px; padding: 18px 40px; border-radius: 999px; background: #0b0b0f; white-space: nowrap; }
+.price small { font-size: 20px; font-weight: 900; letter-spacing: 6px; color: rgba(255,255,255,.7); }
+.price .v { font-family: Oswald, sans-serif; font-weight: 700; font-size: 72px; line-height: 1.15; }
+.foot { position: absolute; left: 0; right: 0; bottom: 70px; display: flex; justify-content: center; align-items: center; gap: 14px; font-size: 18px; font-weight: 800; letter-spacing: 5px; opacity: .9; }
+.foot img { height: 52px; }
+</style>
+</head>
+<body>
+<div class="aa-stage" data-w="1080" data-h="1920">
+  <div class="stripes"></div>
+  <img class="crest" data-src="team.logo" alt="">
+  <div class="top"><div class="tour"><img data-src="tournament.logo" alt=""><span data-bind="tournament.name"></span></div><div class="done">SOLD</div></div>
+  <div class="wel"><small>WELCOME TO</small><div class="tn" data-bind="team.name"></div></div>
+  <div class="disc"><div class="st-photo" data-bg="player.photo"></div></div>
+  <div class="badge"><img data-src="team.logo" alt=""></div>
+  <div class="name" data-bind="player.name"></div>
+  <div class="role" data-bind="player.role"></div>
+  <div class="price"><small>SOLD FOR</small><span class="v" data-bind="bid.points"></span></div>
+  <div class="foot">AUCTION PARTNER <img data-src="brand.logo" alt="Auction Arena"></div>
+</div>
+<script src="../shared/data.js"></script>
+<script src="../shared/aa.js"></script>
+<script src="../shared/story.js"></script>
+</body>
+</html>

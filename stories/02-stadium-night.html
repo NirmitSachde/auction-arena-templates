@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Auction Arena · Story 02 Stadium Night</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Inter:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="../shared/story.css">
+<style>
+/* Story 02 Stadium Night: floodlit night sky, giant SOLD behind a tall photo card edged in the buying team's colour, white price slab. */
+:root { --team: #e11d48; --ink: #fff; --mute: #a8b6d8; }
+.aa-stage { font-family: Inter, sans-serif; color: var(--ink);
+  background:
+    radial-gradient(circle at 12% 6%, rgba(255,255,255,.9) 0 10px, transparent 11px),
+    radial-gradient(circle at 88% 6%, rgba(255,255,255,.9) 0 10px, transparent 11px),
+    radial-gradient(ellipse 40% 50% at 12% 4%, rgba(160,200,255,.45), transparent 70%),
+    radial-gradient(ellipse 40% 50% at 88% 4%, rgba(160,200,255,.45), transparent 70%),
+    radial-gradient(ellipse 90% 30% at 50% 100%, rgba(34,197,94,.35), transparent 70%),
+    linear-gradient(180deg, #0a1638 0%, #071029 55%, #04150d 100%); }
+.top { position: absolute; top: 140px; left: 80px; right: 80px; display: flex; align-items: center; gap: 22px; }
+.top img { width: 96px; height: 96px; object-fit: contain; }
+.top .t { font-family: Oswald, sans-serif; font-weight: 700; font-size: 42px; line-height: 1.2; text-transform: uppercase; letter-spacing: 1px; }
+.top .s { font-size: 20px; font-weight: 800; letter-spacing: 6px; color: var(--mute); margin-top: 4px; }
+.big { position: absolute; left: 0; right: 0; top: 250px; text-align: center; font-family: Oswald, sans-serif; font-weight: 700; font-size: 300px; line-height: 1; letter-spacing: 30px; text-indent: 30px; color: rgba(255,255,255,.1); }
+.card { position: absolute; left: 160px; right: 160px; top: 470px; height: 870px; border-radius: 34px; padding: 8px; background: var(--team);
+  box-shadow: 0 0 0 2px rgba(255,255,255,.25), 0 0 90px var(--team); }
+.card .st-photo { width: 100%; height: 100%; border-radius: 28px; background-color: #0e1a3d; }
+.card .shade { position: absolute; left: 8px; right: 8px; bottom: 8px; height: 360px; border-radius: 0 0 28px 28px; background: linear-gradient(180deg, transparent, rgba(4,8,20,.92)); }
+.card .who { position: absolute; left: 50px; right: 50px; bottom: 50px; }
+.card .tag { display: inline-block; padding: 8px 18px; border-radius: 8px; background: var(--team); font-weight: 900; font-size: 26px; letter-spacing: 8px; }
+.card .name { font-family: Oswald, sans-serif; font-weight: 700; font-size: 88px; line-height: 1.15; text-transform: uppercase; margin-top: 18px; }
+.card .role { font-size: 26px; font-weight: 800; letter-spacing: 6px; color: var(--mute); text-transform: uppercase; margin-top: 10px; }
+.slab { position: absolute; left: 100px; right: 100px; top: 1300px; height: 220px; border-radius: 28px; background: #fff; color: #0a1638; display: flex; align-items: center; padding: 0 40px; }
+.slab .amt { flex: 1; }
+.slab small { font-size: 22px; font-weight: 900; letter-spacing: 7px; color: #5b6b94; }
+.slab .v { font-family: Oswald, sans-serif; font-weight: 700; font-size: 96px; line-height: 1.15; }
+.slab .tm { width: 200px; display: flex; flex-direction: column; align-items: center; gap: 10px; padding-left: 26px; border-left: 2px solid #e2e7f3; }
+.slab .tm img { width: 110px; height: 110px; object-fit: contain; }
+.slab .tm span { font-size: 18px; font-weight: 900; text-transform: uppercase; text-align: center; line-height: 1.1; }
+.foot { position: absolute; left: 80px; right: 80px; bottom: 110px; display: flex; justify-content: space-between; align-items: center; font-size: 20px; font-weight: 800; letter-spacing: 5px; color: var(--mute); }
+.foot img { height: 60px; }
+</style>
+</head>
+<body>
+<div class="aa-stage" data-w="1080" data-h="1920">
+  <div class="top"><img data-src="tournament.logo" alt=""><div><div class="t" data-bind="tournament.name"></div><div class="s">PLAYER AUCTION</div></div></div>
+  <div class="big">SOLD</div>
+  <div class="card">
+    <div class="st-photo" data-bg="player.photo"></div>
+    <div class="shade"></div>
+    <div class="who"><span class="tag">SOLD</span><div class="name" data-bind="player.name"></div><div class="role" data-bind="player.role"></div></div>
+  </div>
+  <div class="slab">
+    <div class="amt"><small>SOLD FOR</small><div class="v" data-bind="bid.points"></div></div>
+    <div class="tm"><img data-src="team.logo" alt=""><span data-bind="team.name"></span></div>
+  </div>
+  <div class="foot"><span>AUCTION PARTNER</span><img data-src="brand.logo" alt="Auction Arena"></div>
+</div>
+<script src="../shared/data.js"></script>
+<script src="../shared/aa.js"></script>
+<script src="../shared/story.js"></script>
+</body>
+</html>

@@ -1,8 +1,12 @@
 /* Auction Arena template runtime (no dependencies).
-   - Scales the fixed 1920x1080 .aa-stage to fit any screen (letterboxed).
-   - Fills [data-bind="path.to.value"] text and [data-src="path"] images.
+   - Scales the fixed .aa-stage to fit any screen (letterboxed). The stage is
+     1920x1080 unless it sets data-w / data-h (story cards use 1080x1920).
+   - Fills [data-bind="path.to.value"] text, [data-src="path"] images and
+     [data-bg="path"] background images.
+   - Mirrors AUCTION.state onto <html data-state> and team.color onto --team.
    - Renders [data-stats] lists by cloning their first child <template>.
-   - Demo controls: SPACE / → raises the bid, T cycles bidding team.
+   - Demo controls: SPACE / → raises the bid, T cycles bidding team,
+     S / U / L set the state to sold / unsold / live.
    - AA.update(patch) deep-merges live data and re-renders; elements whose
      value changed get the .aa-bump class for one animation cycle. */
 (function () {
@@ -35,6 +39,10 @@
       const v = get(d, el.dataset.src);
       if (v && el.getAttribute("src") !== v) el.setAttribute("src", v);
     });
+    document.querySelectorAll("[data-bg]").forEach((el) => {
+      const v = get(d, el.dataset.bg);
+      if (v) el.style.backgroundImage = `url("${v}")`;
+    });
     document.querySelectorAll("[data-stats]").forEach((box) => {
       const tpl = box.querySelector("template");
       if (!tpl) return;
@@ -49,27 +57,32 @@
       });
     });
     const pct = Math.round((d.status.sold / Math.max(1, d.status.available)) * 100);
-    document.documentElement.style.setProperty("--aa-sold-pct", pct);
+    const root = document.documentElement;
+    root.style.setProperty("--aa-sold-pct", pct);
+    if (d.team && d.team.color) root.style.setProperty("--team", d.team.color);
+    root.dataset.state = d.state || "live";
   }
 
   function fit() {
     const st = document.querySelector(".aa-stage");
     if (!st) return;
-    const k = Math.min(innerWidth / 1920, innerHeight / 1080);
+    const w = +st.dataset.w || 1920, h = +st.dataset.h || 1080;
+    const k = Math.min(innerWidth / w, innerHeight / h);
     st.style.transform = `translate(-50%, -50%) scale(${k})`;
   }
 
   /* Demo-only bid simulation so the screen feels live on a monitor. */
   const teams = [
-    { name: "Meena Sports", short: "MS", maxBid: "54.3L", purse: "8.2CR", slots: "7 / 15" },
-    { name: "Royal Strikers", short: "RS", maxBid: "1.2CR", purse: "11.6CR", slots: "5 / 15" },
-    { name: "Titan Warriors", short: "TW", maxBid: "88.0L", purse: "6.9CR", slots: "9 / 15" }
+    { name: "Meena Sports", short: "MS", color: "#e11d48", maxBid: "54.3L", purse: "8.2CR", slots: "7 / 15" },
+    { name: "Royal Strikers", short: "RS", color: "#2563eb", maxBid: "1.2CR", purse: "11.6CR", slots: "5 / 15" },
+    { name: "Titan Warriors", short: "TW", color: "#f59e0b", maxBid: "88.0L", purse: "6.9CR", slots: "9 / 15" }
   ];
   let ti = 0;
   function raiseBid() {
     const b = window.AUCTION.bid;
     b.raw += b.increment;
     b.amount = (b.raw / 1e7).toFixed(2);
+    b.points = b.raw.toLocaleString("en-IN");
     render(false);
   }
   function nextTeam() {
@@ -83,10 +96,16 @@
     render: () => render(false)
   };
 
+  /* Overlays: ?preview (or B) shows a sample camera frame behind the page. */
+  if (/[?&]preview\b/.test(location.search)) document.documentElement.classList.add("aa-preview");
+
   addEventListener("resize", fit);
   addEventListener("keydown", (e) => {
     if (e.code === "Space" || e.code === "ArrowRight") { e.preventDefault(); raiseBid(); }
     if (e.code === "KeyT") nextTeam();
+    const st = { KeyS: "sold", KeyU: "unsold", KeyL: "live" }[e.code];
+    if (st) { window.AUCTION.state = st; render(false); }
+    if (e.code === "KeyB") document.documentElement.classList.toggle("aa-preview");
   });
   document.addEventListener("DOMContentLoaded", () => { render(true); fit(); document.body.classList.add("aa-ready"); });
 })();

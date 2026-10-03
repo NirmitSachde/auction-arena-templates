@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <!-- Stand-in for the live camera feed: an auction hall with an LED wall, a stage table and the auctioneer. Preview only. -->
+  <defs>
+    <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d1430"/><stop offset="1" stop-color="#05070f"/></linearGradient>
+    <radialGradient id="led" cx=".5" cy=".45" r=".6"><stop offset="0" stop-color="#3b5bdb"/><stop offset=".55" stop-color="#1b2a6b"/><stop offset="1" stop-color="#0b1233"/></radialGradient>
+    <radialGradient id="spot" cx=".5" cy="0" r="1"><stop offset="0" stop-color="#fff6d8" stop-opacity=".55"/><stop offset="1" stop-color="#fff6d8" stop-opacity="0"/></radialGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a1d2b"/><stop offset="1" stop-color="#07080d"/></linearGradient>
+    <linearGradient id="table" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b3150"/><stop offset="1" stop-color="#11142a"/></linearGradient>
+    <filter id="blur" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="14"/></filter>
+    <filter id="soft"><feGaussianBlur stdDeviation="3"/></filter>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#wall)"/>
+  <g filter="url(#blur)">
+    <rect x="300" y="90" width="1320" height="560" rx="18" fill="url(#led)"/>
+    <circle cx="960" cy="330" r="150" fill="#f7c948" opacity=".55"/>
+    <rect x="560" y="500" width="800" height="60" rx="30" fill="#f7c948" opacity=".35"/>
+    <circle cx="140" cy="120" r="60" fill="#fff" opacity=".6"/><circle cx="1780" cy="120" r="60" fill="#fff" opacity=".6"/>
+  </g>
+  <polygon points="760,0 1160,0 1500,1080 420,1080" fill="url(#spot)" opacity=".5"/>
+  <rect y="690" width="1920" height="390" fill="url(#floor)"/>
+  <g filter="url(#soft)" fill="#0a0c16">
+    <circle cx="960" cy="560" r="62"/>
+    <path d="M840 760 q0-150 120-150 q120 0 120 150z"/>
+    <circle cx="660" cy="600" r="50"/><path d="M565 770 q0-120 95-120 q95 0 95 120z"/>
+    <circle cx="1260" cy="600" r="50"/><path d="M1165 770 q0-120 95-120 q95 0 95 120z"/>
+  </g>
+  <rect x="420" y="740" width="1080" height="150" rx="10" fill="url(#table)"/>
+  <rect x="420" y="740" width="1080" height="10" fill="#f7c948" opacity=".6"/>
+  <g filter="url(#soft)" fill="#04050a" opacity=".9">
+    <circle cx="160" cy="1010" r="90"/><circle cx="420" cy="1040" r="80"/><circle cx="1500" cy="1040" r="80"/><circle cx="1760" cy="1010" r="90"/>
+  </g>
+</svg>

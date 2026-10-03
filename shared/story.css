@@ -1,0 +1,18 @@
+/* Shared layer for phone-size story cards (templates in stories/).
+   The stage is 1080x1920 (9:16) so the downloaded PNG drops straight into an
+   Instagram / WhatsApp story. Cards must stay html2canvas-friendly: no
+   clip-path, mask, filter, backdrop-filter, blend modes or gradient text,
+   photos as background-image (data-bg), and animations only as "from" frames
+   so the resting state is what gets captured. */
+html, body { background: #0b0d12; }
+.aa-stage[data-h="1920"] { width: 1080px; height: 1920px; }
+.st-photo { background-size: cover; background-position: center top; background-repeat: no-repeat; }
+
+.st-download {
+  position: fixed; right: 20px; bottom: 20px; z-index: 10;
+  padding: 14px 22px; border: 0; border-radius: 12px; cursor: pointer;
+  background: #ffcc00; color: #111; font: 800 15px/1 system-ui, sans-serif; letter-spacing: 1px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .45);
+}
+.st-download[disabled] { opacity: .6; cursor: progress; }
+.aa-capture *, .aa-capture *::before, .aa-capture *::after { animation: none !important; transition: none !important; }

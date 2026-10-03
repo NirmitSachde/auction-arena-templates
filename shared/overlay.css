@@ -1,0 +1,39 @@
+/* Shared layer for YouTube / OBS live overlays (templates in overlays/).
+   The page is transparent so the browser source sits on top of the camera.
+   Open with ?preview (or press B) to drop a sample camera frame behind it. */
+html, body { background: transparent !important; }
+html.aa-preview body { background: #05070d url("../assets/demo-feed.svg") center / cover no-repeat !important; }
+
+/* SOLD / UNSOLD marquee strip across the top of the frame. */
+.ov-strip {
+  position: absolute; left: 0; right: 0; top: 0; height: 58px; z-index: 50;
+  display: flex; align-items: center; overflow: hidden; pointer-events: none;
+  transform: translateY(-110%); transition: transform .45s cubic-bezier(.2, .8, .2, 1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .45);
+}
+html[data-state="sold"] .ov-strip { transform: none; background: var(--ov-sold, linear-gradient(90deg, #14532d, #22c55e 50%, #14532d)); }
+html[data-state="unsold"] .ov-strip { transform: none; background: var(--ov-unsold, linear-gradient(90deg, #450a0a, #b91c1c 50%, #450a0a)); }
+.ov-strip .track { display: flex; flex: none; white-space: nowrap; animation: ov-marquee 28s linear infinite; }
+.ov-strip .track span { padding: 0 90px; font: 900 26px/1 var(--ov-strip-font, "Montserrat", sans-serif); letter-spacing: 12px; color: #fff; text-shadow: 0 2px 6px rgba(0, 0, 0, .5); }
+html[data-state="sold"] .ov-strip .track span::after { content: "SOLD"; }
+html[data-state="unsold"] .ov-strip .track span::after { content: "UNSOLD"; }
+@keyframes ov-marquee { to { transform: translateX(-50%); } }
+
+/* Stamp that slams onto the player when the hammer falls. Templates place it. */
+.ov-stamp {
+  position: absolute; z-index: 40; pointer-events: none; opacity: 0;
+  padding: 6px 18px; border: 5px double currentColor; border-radius: 10px;
+  font: 900 34px/1 var(--ov-stamp-font, "Montserrat", sans-serif); letter-spacing: 4px;
+  background: rgba(0, 0, 0, .55); box-shadow: 0 10px 30px rgba(0, 0, 0, .5);
+  transform: rotate(-14deg);
+}
+.ov-stamp::after { content: "SOLD"; }
+html[data-state="sold"] .ov-stamp { color: #4ade80; opacity: 1; animation: ov-stamp .55s cubic-bezier(.17, .89, .32, 1.28) both; }
+html[data-state="unsold"] .ov-stamp { color: #f87171; opacity: 1; animation: ov-stamp .55s cubic-bezier(.17, .89, .32, 1.28) both; }
+html[data-state="unsold"] .ov-stamp::after { content: "UNSOLD"; }
+@keyframes ov-stamp { from { opacity: 0; transform: scale(3.2) rotate(-24deg); } }
+
+/* LIVE dot used by several overlays. */
+.ov-live { display: inline-flex; align-items: center; gap: 10px; }
+.ov-live::before { content: ""; width: 12px; height: 12px; border-radius: 50%; background: currentColor; animation: ov-blink 1.2s ease-in-out infinite; }
+@keyframes ov-blink { 50% { opacity: .25; } }

@@ -16,6 +16,7 @@ window.AUCTION = {
     role: "Batsman",
     style: "Right-hand bat · Right-arm off-break",
     basePrice: "1.00L",
+    base: "5,00,000",
     stats: [
       { label: "Matches", value: "86" },
       { label: "Runs", value: "2,947" },
@@ -28,6 +29,8 @@ window.AUCTION = {
     ]
   },
   status: { available: 100, sold: 40, unsold: 60 },
-  bid: { amount: "1.00", unit: "CR", raw: 10000000, increment: 500000 },
-  team: { name: "Meena Sports", short: "MS", logo: "../assets/team-logo.svg", maxBid: "54.3L", purse: "8.2CR", slots: "7 / 15" }
+  bid: { amount: "1.00", unit: "CR", points: "1,00,00,000", raw: 10000000, increment: 500000 },
+  team: { name: "Meena Sports", short: "MS", logo: "../assets/team-logo.svg", color: "#e11d48", maxBid: "54.3L", purse: "8.2CR", slots: "7 / 15" },
+  /* Overlays and story cards only: "live" while bidding, then "sold" / "unsold". */
+  state: "live"
 };

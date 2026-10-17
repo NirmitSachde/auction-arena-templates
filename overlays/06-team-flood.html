@@ -39,12 +39,19 @@
 .top { position: absolute; top: 40px; right: 48px; display: flex; align-items: center; gap: 14px; }
 .top .live { padding: 8px 16px; border-radius: 6px; background: var(--team); font-weight: 900; font-size: 16px; letter-spacing: 3px; transition: background .4s; }
 .top img { height: 64px; filter: drop-shadow(0 4px 10px rgba(0,0,0,.5)); }
+.aa-stage { --ov-cel-bg: linear-gradient(160deg, var(--team), color-mix(in srgb, var(--team) 55%, #000)); --ov-cel-accent: #f6f4ef; --ov-cel-ink: #0b0c10; --ov-cel-font: Inter, sans-serif; --ov-stats-font: Inter, sans-serif; }
+.ov-cel-nm { font-family: "Bebas Neue", sans-serif; font-weight: 400; font-size: 76px; line-height: 1; }
+.ov-cel-price div { font-family: "Bebas Neue", sans-serif; font-weight: 400; font-size: 104px; }
+.top .ov-stats > span { background: rgba(11,12,16,.85); }
 </style>
 </head>
 <body>
 <div class="aa-stage">
   <div class="ov-strip"><div class="track"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
-  <div class="top"><span class="live ov-live">LIVE</span><img data-src="brand.logo" alt="Auction Arena"></div>
+  <div class="ov-celebrate"><div class="ov-confetti"><i style="--x:97%;--d:-2.09s;--t:3.29s;--dx:108px;--c:#ffffff"></i><i style="--x:28%;--d:-0.9s;--t:3.21s;--dx:-129px;--c:#f6f4ef"></i><i style="--x:65%;--d:-0.67s;--t:4.34s;--dx:-96px;--c:#0b0c10"></i><i style="--x:89%;--d:-1.21s;--t:3.73s;--dx:-50px;--c:#fbbf24"></i><i style="--x:13%;--d:-0.65s;--t:3.05s;--dx:44px;--c:#ffffff"></i><i style="--x:84%;--d:-1.07s;--t:4.32s;--dx:-149px;--c:#f6f4ef"></i><i style="--x:18%;--d:-0.08s;--t:3.88s;--dx:82px;--c:#0b0c10"></i><i style="--x:77%;--d:-1.18s;--t:2.73s;--dx:110px;--c:#fbbf24"></i><i style="--x:61%;--d:-2.33s;--t:3.05s;--dx:-105px;--c:#ffffff"></i><i style="--x:30%;--d:-0.37s;--t:3.54s;--dx:-105px;--c:#f6f4ef"></i><i style="--x:94%;--d:-1.68s;--t:4.12s;--dx:74px;--c:#0b0c10"></i><i style="--x:12%;--d:-1.32s;--t:2.67s;--dx:-96px;--c:#fbbf24"></i><i style="--x:31%;--d:-1.37s;--t:2.67s;--dx:-5px;--c:#ffffff"></i><i style="--x:18%;--d:-1.5s;--t:3.55s;--dx:63px;--c:#f6f4ef"></i><i style="--x:91%;--d:-1.83s;--t:2.78s;--dx:-7px;--c:#0b0c10"></i><i style="--x:69%;--d:-2.26s;--t:2.95s;--dx:-27px;--c:#fbbf24"></i><i style="--x:30%;--d:-1.9s;--t:2.6s;--dx:115px;--c:#ffffff"></i><i style="--x:40%;--d:-2.39s;--t:3.1s;--dx:1px;--c:#f6f4ef"></i><i style="--x:84%;--d:-2.01s;--t:3.04s;--dx:109px;--c:#0b0c10"></i><i style="--x:32%;--d:-1.31s;--t:2.65s;--dx:50px;--c:#fbbf24"></i><i style="--x:92%;--d:-1.56s;--t:2.7s;--dx:-61px;--c:#ffffff"></i><i style="--x:65%;--d:-2.12s;--t:3.76s;--dx:-119px;--c:#f6f4ef"></i><i style="--x:34%;--d:-0.55s;--t:3.36s;--dx:29px;--c:#0b0c10"></i><i style="--x:31%;--d:-1.18s;--t:3.85s;--dx:55px;--c:#fbbf24"></i><i style="--x:48%;--d:-1.64s;--t:2.96s;--dx:-11px;--c:#ffffff"></i><i style="--x:96%;--d:-2.03s;--t:2.72s;--dx:93px;--c:#f6f4ef"></i><i style="--x:27%;--d:-0.75s;--t:4.08s;--dx:-42px;--c:#0b0c10"></i><i style="--x:61%;--d:-0.53s;--t:3.97s;--dx:-9px;--c:#fbbf24"></i><i style="--x:15%;--d:-2.28s;--t:3.49s;--dx:-65px;--c:#ffffff"></i><i style="--x:30%;--d:-1.16s;--t:4.24s;--dx:-132px;--c:#f6f4ef"></i><i style="--x:78%;--d:-0.35s;--t:3.31s;--dx:-51px;--c:#0b0c10"></i><i style="--x:5%;--d:-2.34s;--t:2.86s;--dx:-134px;--c:#fbbf24"></i><i style="--x:92%;--d:-0.14s;--t:3.31s;--dx:0px;--c:#ffffff"></i><i style="--x:95%;--d:-0.27s;--t:2.74s;--dx:-76px;--c:#f6f4ef"></i><i style="--x:44%;--d:-0.46s;--t:3.77s;--dx:108px;--c:#0b0c10"></i><i style="--x:97%;--d:-1.12s;--t:3.16s;--dx:33px;--c:#fbbf24"></i></div>
+    <div class="ov-cel-card"><div class="ov-cel-ph"><img data-src="player.photo" alt=""></div><span class="ov-cel-tag">SOLD</span><div class="ov-cel-nm" data-bind="player.name"></div><div class="ov-cel-to">to <img data-src="team.logo" alt=""><span data-bind="team.name"></span></div><div class="ov-cel-price"><small>SOLD FOR</small><div data-bind="bid.points"></div></div></div>
+  </div>
+  <div class="top"><div class="ov-stats"><span>Available <b data-bind="status.available"></b></span><span class="s">Sold <b data-bind="status.sold"></b></span><span class="u">Unsold <b data-bind="status.unsold"></b></span></div><span class="live ov-live">LIVE</span><img data-src="brand.logo" alt="Auction Arena"></div>
   <div class="l3">
     <div class="card">
       <div class="ph"><img data-src="player.photo" alt=""></div>
@@ -55,7 +62,7 @@
         <div class="meta"><span><b>ROLE</b><span data-bind="player.role"></span></span><span><b>BASE</b><span data-bind="player.base"></span></span></div>
       </div>
     </div>
-    <div class="flood">
+    <div class="flood" data-pulse>
       <img class="crest" data-src="team.logo" alt="">
       <div class="amt"><small>CURRENT BID</small><div class="v" data-bind="bid.points"></div></div>
       <div class="tm"><img data-src="team.logo" alt=""><div class="n" data-bind="team.name"></div></div>

@@ -40,11 +40,18 @@
 .team .n { font-family: "Barlow Condensed", sans-serif; font-weight: 700; font-size: 28px; text-transform: uppercase; line-height: 1; }
 .team .k { font-size: 12px; }
 .mark { position: absolute; right: 48px; top: 40px; height: 64px; filter: drop-shadow(0 4px 10px rgba(0,0,0,.5)); }
+.aa-stage { --ov-cel-bg: linear-gradient(160deg, var(--team), #0b0d14 75%); --ov-cel-accent: #ffffff; --ov-cel-ink: #0b0d14; --ov-cel-font: "Barlow Condensed", sans-serif; --ov-stats-font: Barlow, sans-serif; }
+.rail .ov-stats { margin: 14px 22px 0 30px; }
+.rail .ov-stats > span { flex: 1; justify-content: space-between; background: var(--bg2); font-size: 11px; letter-spacing: 1.5px; padding: 0 10px; }
+.rail .ov-stats b { font-size: 18px; }
 </style>
 </head>
 <body>
 <div class="aa-stage">
   <div class="ov-strip"><div class="track"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
+  <div class="ov-celebrate"><div class="ov-confetti"><i style="--x:70%;--d:-0.36s;--t:3.52s;--dx:65px;--c:#ffffff"></i><i style="--x:25%;--d:-1.46s;--t:4.0s;--dx:-84px;--c:#e11d48"></i><i style="--x:24%;--d:-0.34s;--t:3.71s;--dx:-99px;--c:#94a3b8"></i><i style="--x:73%;--d:-0.15s;--t:3.83s;--dx:111px;--c:#fbbf24"></i><i style="--x:73%;--d:-1.16s;--t:4.0s;--dx:126px;--c:#ffffff"></i><i style="--x:9%;--d:-0.6s;--t:3.1s;--dx:-110px;--c:#e11d48"></i><i style="--x:66%;--d:-1.09s;--t:2.65s;--dx:-128px;--c:#94a3b8"></i><i style="--x:58%;--d:-0.78s;--t:4.35s;--dx:150px;--c:#fbbf24"></i><i style="--x:67%;--d:-0.48s;--t:3.1s;--dx:100px;--c:#ffffff"></i><i style="--x:70%;--d:-1.94s;--t:3.51s;--dx:-34px;--c:#e11d48"></i><i style="--x:91%;--d:-1.26s;--t:4.18s;--dx:-28px;--c:#94a3b8"></i><i style="--x:73%;--d:-2.14s;--t:2.96s;--dx:69px;--c:#fbbf24"></i><i style="--x:19%;--d:-1.0s;--t:3.31s;--dx:1px;--c:#ffffff"></i><i style="--x:11%;--d:-1.61s;--t:3.37s;--dx:-52px;--c:#e11d48"></i><i style="--x:87%;--d:-0.73s;--t:2.82s;--dx:-81px;--c:#94a3b8"></i><i style="--x:93%;--d:-1.54s;--t:3.26s;--dx:-31px;--c:#fbbf24"></i><i style="--x:19%;--d:-2.32s;--t:3.0s;--dx:-112px;--c:#ffffff"></i><i style="--x:52%;--d:-2.12s;--t:2.89s;--dx:-46px;--c:#e11d48"></i><i style="--x:22%;--d:-1.7s;--t:4.39s;--dx:46px;--c:#94a3b8"></i><i style="--x:45%;--d:-1.01s;--t:3.24s;--dx:-113px;--c:#fbbf24"></i><i style="--x:94%;--d:-0.88s;--t:3.21s;--dx:74px;--c:#ffffff"></i><i style="--x:58%;--d:-1.69s;--t:3.29s;--dx:104px;--c:#e11d48"></i><i style="--x:81%;--d:-0.71s;--t:4.33s;--dx:-103px;--c:#94a3b8"></i><i style="--x:31%;--d:-2.33s;--t:2.79s;--dx:-25px;--c:#fbbf24"></i><i style="--x:36%;--d:-0.1s;--t:4.0s;--dx:-22px;--c:#ffffff"></i><i style="--x:98%;--d:-0.31s;--t:3.36s;--dx:-28px;--c:#e11d48"></i><i style="--x:53%;--d:-0.36s;--t:4.25s;--dx:132px;--c:#94a3b8"></i><i style="--x:65%;--d:-1.68s;--t:2.76s;--dx:-131px;--c:#fbbf24"></i><i style="--x:90%;--d:-0.44s;--t:4.21s;--dx:-23px;--c:#ffffff"></i><i style="--x:4%;--d:-1.52s;--t:4.04s;--dx:-118px;--c:#e11d48"></i><i style="--x:79%;--d:-2.05s;--t:2.72s;--dx:-98px;--c:#94a3b8"></i><i style="--x:60%;--d:-0.03s;--t:4.39s;--dx:53px;--c:#fbbf24"></i><i style="--x:36%;--d:-1.49s;--t:2.68s;--dx:-38px;--c:#ffffff"></i><i style="--x:16%;--d:-2.33s;--t:3.07s;--dx:-68px;--c:#e11d48"></i><i style="--x:27%;--d:-2.24s;--t:3.73s;--dx:111px;--c:#94a3b8"></i><i style="--x:28%;--d:-0.7s;--t:3.5s;--dx:-69px;--c:#fbbf24"></i></div>
+    <div class="ov-cel-card"><div class="ov-cel-ph"><img data-src="player.photo" alt=""></div><span class="ov-cel-tag">SOLD</span><div class="ov-cel-nm" data-bind="player.name"></div><div class="ov-cel-to">to <img data-src="team.logo" alt=""><span data-bind="team.name"></span></div><div class="ov-cel-price"><small>SOLD FOR</small><div data-bind="bid.points"></div></div></div>
+  </div>
   <img class="mark" data-src="brand.logo" alt="Auction Arena">
   <aside class="rail">
     <div class="hd"><img data-src="tournament.logo" alt=""><span class="t" data-bind="tournament.name"></span><span class="live ov-live">LIVE</span></div>
@@ -55,8 +62,9 @@
       <div class="row"><div class="k">Role</div><div class="v" data-bind="player.role"></div></div>
       <div class="row"><div class="k">Base</div><div class="v" data-bind="player.base"></div></div>
     </div>
-    <div class="bid"><div class="k">Current bid</div><div class="v" data-bind="bid.points"></div></div>
+    <div class="bid" data-pulse><div class="k">Current bid</div><div class="v" data-bind="bid.points"></div></div>
     <div class="team"><img data-src="team.logo" alt=""><div><div class="k">Highest bidder</div><div class="n" data-bind="team.name"></div></div></div>
+    <div class="ov-stats"><span>Available <b data-bind="status.available"></b></span><span class="s">Sold <b data-bind="status.sold"></b></span><span class="u">Unsold <b data-bind="status.unsold"></b></span></div>
   </aside>
 </div>
 <script src="../shared/data.js"></script>

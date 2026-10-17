@@ -27,8 +27,11 @@
         'player.photo' => isset($player) ? $player->player_image : asset('assets/users/imgs/unknown-player.png'),
         'player.base' => isset($basePrice) ? $aaInr($basePrice) : '-',
         'bid.points' => $aaBid ? $aaInr($aaBid->current_price) : '-',
-        'team.name' => $aaBid?->team?->name ?? 'NO BIDS',
+        'team.name' => $aaBid?->team?->name ?? 'NO BIDS YET',
         'team.logo' => $aaBid?->team?->team_image ?? asset('assets/users/imgs/default-team.png'),
         'team.color' => $aaBid?->team?->color ?? '#e11d48', // CHECK: team colour column, if there is one
+        'status.available' => $availableCount ?? '-', // CHECK: players still in the pool
+        'status.sold' => $soldCount ?? '-', // CHECK
+        'status.unsold' => $unsoldCount ?? '-', // CHECK
     ];
 @endphp

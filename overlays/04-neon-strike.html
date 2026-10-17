@@ -44,13 +44,22 @@
 .core .tm { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 10px; border-left: 1px solid rgba(255,43,214,.4); }
 .core .tm img { width: 92px; height: 92px; object-fit: contain; border-radius: 50%; background: #fff; padding: 6px; box-shadow: 0 0 18px rgba(255,43,214,.6); }
 .core .tm .n { max-width: 170px; font-size: 18px; font-weight: 700; text-transform: uppercase; text-align: center; line-height: 1.05; }
+.aa-stage { --ov-cel-bg: linear-gradient(160deg, #0b1030, #050814); --ov-cel-accent: #ff2bd6; --ov-cel-ink: #050814; --ov-cel-font: Orbitron, sans-serif; --ov-stats-font: Rajdhani, sans-serif; }
+.ov-cel-card { box-shadow: 0 0 60px rgba(255,43,214,.5), inset 0 0 0 3px #ff2bd6; }
+.ov-cel-nm { font-size: 40px; }
+.hud-stats { position: absolute; left: 380px; top: 124px; }
+.hud-stats > span { background: rgba(5,8,20,.9); border: 1px solid rgba(34,232,255,.5); border-radius: 0; font-size: 14px; }
 </style>
 </head>
 <body>
 <div class="aa-stage">
   <div class="ov-strip"><div class="track"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
+  <div class="ov-celebrate"><div class="ov-confetti"><i style="--x:36%;--d:-0.83s;--t:2.63s;--dx:-32px;--c:#22e8ff"></i><i style="--x:6%;--d:-0.04s;--t:3.92s;--dx:122px;--c:#ff2bd6"></i><i style="--x:26%;--d:-1.23s;--t:3.04s;--dx:68px;--c:#ffffff"></i><i style="--x:15%;--d:-1.58s;--t:3.77s;--dx:93px;--c:#a78bfa"></i><i style="--x:71%;--d:-2.0s;--t:3.31s;--dx:99px;--c:#22e8ff"></i><i style="--x:41%;--d:-1.65s;--t:4.37s;--dx:15px;--c:#ff2bd6"></i><i style="--x:27%;--d:-2.0s;--t:3.87s;--dx:-89px;--c:#ffffff"></i><i style="--x:53%;--d:-2.37s;--t:4.37s;--dx:-94px;--c:#a78bfa"></i><i style="--x:3%;--d:-0.17s;--t:3.93s;--dx:-30px;--c:#22e8ff"></i><i style="--x:57%;--d:-0.39s;--t:2.75s;--dx:35px;--c:#ff2bd6"></i><i style="--x:66%;--d:-1.61s;--t:3.11s;--dx:-36px;--c:#ffffff"></i><i style="--x:90%;--d:-0.7s;--t:3.43s;--dx:-80px;--c:#a78bfa"></i><i style="--x:36%;--d:-1.07s;--t:3.07s;--dx:8px;--c:#22e8ff"></i><i style="--x:72%;--d:-0.78s;--t:2.66s;--dx:-2px;--c:#ff2bd6"></i><i style="--x:29%;--d:-0.86s;--t:2.6s;--dx:35px;--c:#ffffff"></i><i style="--x:12%;--d:-1.14s;--t:3.5s;--dx:-58px;--c:#a78bfa"></i><i style="--x:33%;--d:-1.21s;--t:2.61s;--dx:-25px;--c:#22e8ff"></i><i style="--x:13%;--d:-0.35s;--t:3.66s;--dx:41px;--c:#ff2bd6"></i><i style="--x:4%;--d:-0.72s;--t:3.73s;--dx:-117px;--c:#ffffff"></i><i style="--x:76%;--d:-2.3s;--t:4.14s;--dx:-81px;--c:#a78bfa"></i><i style="--x:86%;--d:-2.14s;--t:4.01s;--dx:145px;--c:#22e8ff"></i><i style="--x:51%;--d:-1.83s;--t:3.9s;--dx:93px;--c:#ff2bd6"></i><i style="--x:21%;--d:-0.68s;--t:3.71s;--dx:-86px;--c:#ffffff"></i><i style="--x:7%;--d:-1.98s;--t:3.89s;--dx:102px;--c:#a78bfa"></i><i style="--x:82%;--d:-1.03s;--t:3.86s;--dx:98px;--c:#22e8ff"></i><i style="--x:19%;--d:-2.18s;--t:3.96s;--dx:131px;--c:#ff2bd6"></i><i style="--x:4%;--d:-1.98s;--t:3.65s;--dx:-43px;--c:#ffffff"></i><i style="--x:12%;--d:-0.07s;--t:2.84s;--dx:24px;--c:#a78bfa"></i><i style="--x:15%;--d:-0.9s;--t:3.41s;--dx:-135px;--c:#22e8ff"></i><i style="--x:82%;--d:-0.05s;--t:3.56s;--dx:-35px;--c:#ff2bd6"></i><i style="--x:64%;--d:-0.63s;--t:3.42s;--dx:-125px;--c:#ffffff"></i><i style="--x:97%;--d:-2.24s;--t:4.22s;--dx:-113px;--c:#a78bfa"></i><i style="--x:86%;--d:-1.26s;--t:3.94s;--dx:82px;--c:#22e8ff"></i><i style="--x:34%;--d:-1.94s;--t:4.12s;--dx:-40px;--c:#ff2bd6"></i><i style="--x:95%;--d:-1.82s;--t:3.02s;--dx:75px;--c:#ffffff"></i><i style="--x:65%;--d:-2.03s;--t:2.74s;--dx:-13px;--c:#a78bfa"></i></div>
+    <div class="ov-cel-card"><div class="ov-cel-ph"><img data-src="player.photo" alt=""></div><span class="ov-cel-tag">SOLD</span><div class="ov-cel-nm" data-bind="player.name"></div><div class="ov-cel-to">to <img data-src="team.logo" alt=""><span data-bind="team.name"></span></div><div class="ov-cel-price"><small>SOLD FOR</small><div data-bind="bid.points"></div></div></div>
+  </div>
   <div class="hud"><img data-src="tournament.logo" alt=""><span class="t" data-bind="tournament.name"></span></div>
   <div class="live ov-live">LIVE AUCTION</div>
+  <div class="hud-stats"><div class="ov-stats"><span>Available <b data-bind="status.available"></b></span><span class="s">Sold <b data-bind="status.sold"></b></span><span class="u">Unsold <b data-bind="status.unsold"></b></span></div></div>
   <img class="mark" data-src="brand.logo" alt="Auction Arena">
 
   <div class="bar">
@@ -61,7 +70,7 @@
     </div>
   </div>
   <div class="core">
-    <div class="amt"><small>CURRENT BID</small><div class="v" data-bind="bid.points"></div></div>
+    <div class="amt" data-pulse><small>CURRENT BID</small><div class="v" data-bind="bid.points"></div></div>
     <div class="tm"><img data-src="team.logo" alt=""><div class="n" data-bind="team.name"></div></div>
   </div>
 </div>

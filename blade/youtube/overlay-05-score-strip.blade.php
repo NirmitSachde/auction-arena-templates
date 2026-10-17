@@ -32,9 +32,12 @@
         'player.photo' => isset($player) ? $player->player_image : asset('assets/users/imgs/unknown-player.png'),
         'player.base' => isset($basePrice) ? $aaInr($basePrice) : '-',
         'bid.points' => $aaBid ? $aaInr($aaBid->current_price) : '-',
-        'team.name' => $aaBid?->team?->name ?? 'NO BIDS',
+        'team.name' => $aaBid?->team?->name ?? 'NO BIDS YET',
         'team.logo' => $aaBid?->team?->team_image ?? asset('assets/users/imgs/default-team.png'),
         'team.color' => $aaBid?->team?->color ?? '#e11d48', // CHECK: team colour column, if there is one
+        'status.available' => $availableCount ?? '-', // CHECK: players still in the pool
+        'status.sold' => $soldCount ?? '-', // CHECK
+        'status.unsold' => $unsoldCount ?? '-', // CHECK
     ];
 @endphp
 
@@ -114,6 +117,46 @@
         .ov-live::before { content: ""; width: 12px; height: 12px; border-radius: 50%; background: currentColor; animation: ov-blink 1.2s ease-in-out infinite; }
         @keyframes ov-blink { 50% { opacity: .25; } }
 
+        /* SOLD celebration: a centred card with confetti for the whole sold state.
+           Keeps the camera visible around it instead of a full-screen takeover.
+           Templates theme it with --ov-cel-bg / -accent / -ink / -font. */
+        .ov-celebrate { position: absolute; inset: 0; z-index: 45; pointer-events: none; display: none; overflow: hidden; }
+        html[data-state="sold"] .ov-celebrate { display: block; }
+        .ov-cel-card {
+          position: absolute; left: 50%; top: 47%; width: 660px; padding: 0 40px 34px; text-align: center; color: #fff;
+          background: var(--ov-cel-bg, linear-gradient(160deg, #7f1d1d, #b91c1c 55%, #450a0a)); border-radius: 26px;
+          box-shadow: 0 40px 90px rgba(0, 0, 0, .55), inset 0 0 0 3px var(--ov-cel-accent, #fcd34d);
+          font-family: var(--ov-cel-font, "Montserrat", sans-serif);
+          transform: translate(-50%, -50%); animation: ov-cel-in .6s cubic-bezier(.17, .89, .32, 1.28) both;
+        }
+        @keyframes ov-cel-in { from { opacity: 0; transform: translate(-50%, -50%) scale(.6); } }
+        .ov-cel-ph { width: 190px; height: 190px; margin: -95px auto 16px; border-radius: 50%; overflow: hidden; background: #111;
+          border: 6px solid var(--ov-cel-accent, #fcd34d); box-shadow: 0 14px 30px rgba(0, 0, 0, .5); }
+        .ov-cel-ph img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+        .ov-cel-tag { display: inline-block; padding: 7px 24px 7px 32px; border-radius: 999px; background: var(--ov-cel-accent, #fcd34d); color: var(--ov-cel-ink, #111);
+          font-weight: 900; font-size: 24px; letter-spacing: 8px; }
+        .ov-cel-nm { margin-top: 14px; font-weight: 900; font-size: 50px; line-height: 1.1; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .ov-cel-to { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 10px; font-weight: 800; font-size: 24px; letter-spacing: 2px; text-transform: uppercase; }
+        .ov-cel-to img { width: 62px; height: 62px; border-radius: 50%; background: #fff; padding: 5px; object-fit: contain; }
+        .ov-cel-price { margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(255, 255, 255, .2); }
+        .ov-cel-price small { display: block; font-size: 16px; font-weight: 800; letter-spacing: 6px; opacity: .75; }
+        .ov-cel-price div { margin-top: 6px; font-weight: 900; font-size: 80px; line-height: 1; font-variant-numeric: tabular-nums; color: var(--ov-cel-accent, #fcd34d); }
+        .ov-confetti i { position: absolute; top: -40px; left: var(--x); width: 14px; height: 24px; border-radius: 3px; background: var(--c);
+          animation: ov-fall var(--t) linear var(--d) infinite; }
+        @keyframes ov-fall { to { transform: translate(var(--dx), 1180px) rotate(900deg); } }
+
+        /* Supply context: Available / Sold / Unsold counts. Templates restyle as needed. */
+        .ov-stats { display: flex; gap: 8px; }
+        .ov-stats > span { display: flex; align-items: center; gap: 8px; height: 34px; padding: 0 14px; border-radius: 6px; background: rgba(0, 0, 0, .6);
+          font: 700 13px/1 var(--ov-stats-font, "Montserrat", sans-serif); letter-spacing: 2px; text-transform: uppercase; color: rgba(255, 255, 255, .78); white-space: nowrap; }
+        .ov-stats b { font-size: 20px; letter-spacing: 0; color: #fff; }
+        .ov-stats .s b { color: #4ade80; }
+        .ov-stats .u b { color: #f87171; }
+
+        /* Every new bid flashes the whole bid block ([data-pulse]), not just the digits. */
+        .aa-pulse { animation: ov-pulse .7s ease-out; }
+        @keyframes ov-pulse { 0% { filter: brightness(1.8) saturate(1.3); } 100% { filter: none; } }
+
         /* Overlay 05 Score Strip: cricket TV scorebug. One slim segmented strip plus a ticker; the least camera coverage of the set. */
         :root { --deep: #0b1d4d; --mid: #14306f; --hot: #ff2e63; --ink: #fff; --mute: #a9b8e0; }
         .aa-stage { font-family: Saira, sans-serif; color: var(--ink); --ov-strip-font: "Saira Condensed", sans-serif; --ov-stamp-font: "Saira Condensed", sans-serif; }
@@ -149,6 +192,8 @@
         .corner { position: absolute; top: 40px; right: 48px; display: flex; align-items: center; gap: 14px; }
         .corner .live { height: 40px; padding: 0 16px; background: var(--hot); font-weight: 800; font-size: 16px; letter-spacing: 3px; border-radius: 4px; }
         .corner img { height: 64px; }
+        .aa-stage { --ov-cel-bg: linear-gradient(160deg, #14306f, #0b1d4d 70%); --ov-cel-accent: #ff2e63; --ov-cel-ink: #ffffff; --ov-cel-font: "Saira Condensed", sans-serif; --ov-stats-font: Saira, sans-serif; }
+        .corner .ov-stats > span { background: rgba(11,29,77,.92); }
 
         :root { --team: {{ $aa['team.color'] }}; }
     </style>
@@ -157,14 +202,17 @@
 @section('content')
     <div class="aa-stage">
       <div class="ov-strip"><div class="track"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
-      <div class="corner"><span class="live ov-live">LIVE</span><img data-src="brand.logo" src="{{ $aa['brand.logo'] }}" alt="Auction Arena"></div>
+      <div class="ov-celebrate"><div class="ov-confetti"><i style="--x:7%;--d:-1.48s;--t:3.76s;--dx:-121px;--c:#ff2e63"></i><i style="--x:78%;--d:-0.35s;--t:3.06s;--dx:-5px;--c:#ffffff"></i><i style="--x:81%;--d:-1.36s;--t:2.62s;--dx:-129px;--c:#3b82f6"></i><i style="--x:64%;--d:-0.65s;--t:3.81s;--dx:-49px;--c:#fbbf24"></i><i style="--x:88%;--d:-1.18s;--t:3.88s;--dx:-14px;--c:#ff2e63"></i><i style="--x:61%;--d:-1.12s;--t:3.98s;--dx:121px;--c:#ffffff"></i><i style="--x:27%;--d:-0.75s;--t:2.75s;--dx:82px;--c:#3b82f6"></i><i style="--x:4%;--d:-0.7s;--t:2.74s;--dx:99px;--c:#fbbf24"></i><i style="--x:59%;--d:-2.39s;--t:3.3s;--dx:-53px;--c:#ff2e63"></i><i style="--x:11%;--d:-1.4s;--t:2.86s;--dx:108px;--c:#ffffff"></i><i style="--x:35%;--d:-2.29s;--t:2.84s;--dx:100px;--c:#3b82f6"></i><i style="--x:37%;--d:-2.13s;--t:3.87s;--dx:-42px;--c:#fbbf24"></i><i style="--x:65%;--d:-2.15s;--t:3.48s;--dx:-148px;--c:#ff2e63"></i><i style="--x:22%;--d:-0.01s;--t:3.49s;--dx:70px;--c:#ffffff"></i><i style="--x:53%;--d:-0.72s;--t:2.85s;--dx:16px;--c:#3b82f6"></i><i style="--x:50%;--d:-0.76s;--t:4.11s;--dx:-160px;--c:#fbbf24"></i><i style="--x:43%;--d:-1.8s;--t:4.11s;--dx:-99px;--c:#ff2e63"></i><i style="--x:27%;--d:-1.71s;--t:4.22s;--dx:-12px;--c:#ffffff"></i><i style="--x:34%;--d:-0.89s;--t:3.31s;--dx:141px;--c:#3b82f6"></i><i style="--x:11%;--d:-0.87s;--t:3.37s;--dx:-20px;--c:#fbbf24"></i><i style="--x:8%;--d:-0.67s;--t:2.69s;--dx:-14px;--c:#ff2e63"></i><i style="--x:83%;--d:-2.25s;--t:3.05s;--dx:-24px;--c:#ffffff"></i><i style="--x:57%;--d:-1.23s;--t:2.94s;--dx:31px;--c:#3b82f6"></i><i style="--x:56%;--d:-2.12s;--t:4.06s;--dx:44px;--c:#fbbf24"></i><i style="--x:72%;--d:-1.32s;--t:3.9s;--dx:-135px;--c:#ff2e63"></i><i style="--x:95%;--d:-0.99s;--t:3.71s;--dx:-90px;--c:#ffffff"></i><i style="--x:84%;--d:-2.09s;--t:3.47s;--dx:121px;--c:#3b82f6"></i><i style="--x:18%;--d:-0.41s;--t:3.35s;--dx:-16px;--c:#fbbf24"></i><i style="--x:40%;--d:-0.61s;--t:3.93s;--dx:-27px;--c:#ff2e63"></i><i style="--x:53%;--d:-1.57s;--t:3.14s;--dx:125px;--c:#ffffff"></i><i style="--x:87%;--d:-0.95s;--t:2.9s;--dx:-78px;--c:#3b82f6"></i><i style="--x:11%;--d:-0.5s;--t:4.23s;--dx:94px;--c:#fbbf24"></i><i style="--x:72%;--d:-0.53s;--t:4.23s;--dx:70px;--c:#ff2e63"></i><i style="--x:56%;--d:-0.34s;--t:2.95s;--dx:-114px;--c:#ffffff"></i><i style="--x:24%;--d:-0.82s;--t:2.76s;--dx:-38px;--c:#3b82f6"></i><i style="--x:49%;--d:-0.62s;--t:3.63s;--dx:-150px;--c:#fbbf24"></i></div>
+        <div class="ov-cel-card"><div class="ov-cel-ph"><img data-src="player.photo" src="{{ $aa['player.photo'] }}" alt=""></div><span class="ov-cel-tag">SOLD</span><div class="ov-cel-nm" data-bind="player.name">{{ $aa['player.name'] }}</div><div class="ov-cel-to">to <img data-src="team.logo" src="{{ $aa['team.logo'] }}" alt=""><span data-bind="team.name">{{ $aa['team.name'] }}</span></div><div class="ov-cel-price"><small>SOLD FOR</small><div data-bind="bid.points">{{ $aa['bid.points'] }}</div></div></div>
+      </div>
+      <div class="corner"><div class="ov-stats"><span>Available <b data-bind="status.available">{{ $aa['status.available'] }}</b></span><span class="s">Sold <b data-bind="status.sold">{{ $aa['status.sold'] }}</b></span><span class="u">Unsold <b data-bind="status.unsold">{{ $aa['status.unsold'] }}</b></span></div><span class="live ov-live">LIVE</span><img data-src="brand.logo" src="{{ $aa['brand.logo'] }}" alt="Auction Arena"></div>
       <div class="wrap">
         <div class="strip">
           <div class="tour"><img data-src="tournament.logo" src="{{ $aa['tournament.logo'] }}" alt=""></div>
           <div class="ph"><img data-src="player.photo" src="{{ $aa['player.photo'] }}" alt=""><div class="ov-stamp"></div></div>
           <div class="who"><div class="name" data-bind="player.name">{{ $aa['player.name'] }}</div><div class="role" data-bind="player.role">{{ $aa['player.role'] }}</div></div>
           <div class="seg"><span class="k">Base</span><span class="v" data-bind="player.base">{{ $aa['player.base'] }}</span></div>
-          <div class="bid"><span class="k">Current bid</span><span class="v" data-bind="bid.points">{{ $aa['bid.points'] }}</span></div>
+          <div class="bid" data-pulse><span class="k">Current bid</span><span class="v" data-bind="bid.points">{{ $aa['bid.points'] }}</span></div>
           <div class="team"><img data-src="team.logo" src="{{ $aa['team.logo'] }}" alt=""><span class="n" data-bind="team.name">{{ $aa['team.name'] }}</span></div>
         </div>
         <div class="ticker"><span class="lab">AUCTION</span><div class="vp"><div class="run"><span data-bind="tournament.name">{{ $aa['tournament.name'] }}</span><span>Live player auction</span><span>Powered by Auction Arena</span><span data-bind="tournament.name">{{ $aa['tournament.name'] }}</span><span>Live player auction</span><span>Powered by Auction Arena</span><span data-bind="tournament.name">{{ $aa['tournament.name'] }}</span><span>Live player auction</span><span>Powered by Auction Arena</span><span data-bind="tournament.name">{{ $aa['tournament.name'] }}</span><span>Live player auction</span><span>Powered by Auction Arena</span></div></div></div>
@@ -200,7 +248,8 @@
 
             const inr = (n) => (n == null || n === "" || isNaN(n) ? (n ?? "-") : new Intl.NumberFormat("en-IN").format(n));
             const limit = (s, n) => (s.length > n ? s.slice(0, n - 3) + "..." : s);
-            function flash(el) { el.classList.remove("aa-bump"); void el.offsetWidth; el.classList.add("aa-bump"); }
+            function restart(el, cls) { if (el) { el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); } }
+            function flash(el) { restart(el, "aa-bump"); restart(el.closest("[data-pulse]"), "aa-pulse"); }
             function text(key, value, pulse) {
                 document.querySelectorAll(`[data-bind="${key}"]`).forEach((el) => { el.textContent = value; if (pulse) flash(el); });
             }
@@ -210,11 +259,19 @@
             }
             const state = (s) => (root.dataset.state = s);
             const teamColor = (c) => root.style.setProperty("--team", c || DEFAULTS.color);
-            function noBids() { text("team.name", "NO BIDS"); image("team.logo", DEFAULTS.team); teamColor(null); }
+            function noBids() { text("team.name", "NO BIDS YET"); image("team.logo", DEFAULTS.team); teamColor(null); }
+            /* Sold / unsold move one player out of the pool; skipped if the counts aren't numbers. */
+            function count(key, delta) {
+                const el = document.querySelector(`[data-bind="${key}"]`);
+                const n = el ? parseInt(el.textContent.replace(/,/g, ""), 10) : NaN;
+                if (!isNaN(n)) text(key, inr(Math.max(0, n + delta)), true);
+            }
             function clearReset() { if (resetTimer) { clearTimeout(resetTimer); resetTimer = null; } }
 
             function finish(result) {
                 state(result);
+                count(`status.${result}`, 1);
+                count("status.available", -1);
                 clearReset();
                 resetTimer = setTimeout(() => {
                     state("live");

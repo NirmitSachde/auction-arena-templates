@@ -13,7 +13,8 @@
 
     const inr = (n) => (n == null || n === "" || isNaN(n) ? (n ?? "-") : new Intl.NumberFormat("en-IN").format(n));
     const limit = (s, n) => (s.length > n ? s.slice(0, n - 3) + "..." : s);
-    function flash(el) { el.classList.remove("aa-bump"); void el.offsetWidth; el.classList.add("aa-bump"); }
+    function restart(el, cls) { if (el) { el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); } }
+    function flash(el) { restart(el, "aa-bump"); restart(el.closest("[data-pulse]"), "aa-pulse"); }
     function text(key, value, pulse) {
         document.querySelectorAll(`[data-bind="${key}"]`).forEach((el) => { el.textContent = value; if (pulse) flash(el); });
     }
@@ -23,11 +24,19 @@
     }
     const state = (s) => (root.dataset.state = s);
     const teamColor = (c) => root.style.setProperty("--team", c || DEFAULTS.color);
-    function noBids() { text("team.name", "NO BIDS"); image("team.logo", DEFAULTS.team); teamColor(null); }
+    function noBids() { text("team.name", "NO BIDS YET"); image("team.logo", DEFAULTS.team); teamColor(null); }
+    /* Sold / unsold move one player out of the pool; skipped if the counts aren't numbers. */
+    function count(key, delta) {
+        const el = document.querySelector(`[data-bind="${key}"]`);
+        const n = el ? parseInt(el.textContent.replace(/,/g, ""), 10) : NaN;
+        if (!isNaN(n)) text(key, inr(Math.max(0, n + delta)), true);
+    }
     function clearReset() { if (resetTimer) { clearTimeout(resetTimer); resetTimer = null; } }
 
     function finish(result) {
         state(result);
+        count(`status.${result}`, 1);
+        count("status.available", -1);
         clearReset();
         resetTimer = setTimeout(() => {
             state("live");

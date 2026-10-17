@@ -20,9 +20,13 @@
   };
 
   function bump(el) {
-    el.classList.remove("aa-bump");
-    void el.offsetWidth;
-    el.classList.add("aa-bump");
+    const block = el.closest("[data-pulse]");
+    for (const [n, c] of [[el, "aa-bump"], [block, "aa-pulse"]]) {
+      if (!n) continue;
+      n.classList.remove(c);
+      void n.offsetWidth;
+      n.classList.add(c);
+    }
   }
 
   function render(first) {

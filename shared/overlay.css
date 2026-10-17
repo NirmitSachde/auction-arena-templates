@@ -37,3 +37,43 @@ html[data-state="unsold"] .ov-stamp::after { content: "UNSOLD"; }
 .ov-live { display: inline-flex; align-items: center; gap: 10px; }
 .ov-live::before { content: ""; width: 12px; height: 12px; border-radius: 50%; background: currentColor; animation: ov-blink 1.2s ease-in-out infinite; }
 @keyframes ov-blink { 50% { opacity: .25; } }
+
+/* SOLD celebration: a centred card with confetti for the whole sold state.
+   Keeps the camera visible around it instead of a full-screen takeover.
+   Templates theme it with --ov-cel-bg / -accent / -ink / -font. */
+.ov-celebrate { position: absolute; inset: 0; z-index: 45; pointer-events: none; display: none; overflow: hidden; }
+html[data-state="sold"] .ov-celebrate { display: block; }
+.ov-cel-card {
+  position: absolute; left: 50%; top: 47%; width: 660px; padding: 0 40px 34px; text-align: center; color: #fff;
+  background: var(--ov-cel-bg, linear-gradient(160deg, #7f1d1d, #b91c1c 55%, #450a0a)); border-radius: 26px;
+  box-shadow: 0 40px 90px rgba(0, 0, 0, .55), inset 0 0 0 3px var(--ov-cel-accent, #fcd34d);
+  font-family: var(--ov-cel-font, "Montserrat", sans-serif);
+  transform: translate(-50%, -50%); animation: ov-cel-in .6s cubic-bezier(.17, .89, .32, 1.28) both;
+}
+@keyframes ov-cel-in { from { opacity: 0; transform: translate(-50%, -50%) scale(.6); } }
+.ov-cel-ph { width: 190px; height: 190px; margin: -95px auto 16px; border-radius: 50%; overflow: hidden; background: #111;
+  border: 6px solid var(--ov-cel-accent, #fcd34d); box-shadow: 0 14px 30px rgba(0, 0, 0, .5); }
+.ov-cel-ph img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+.ov-cel-tag { display: inline-block; padding: 7px 24px 7px 32px; border-radius: 999px; background: var(--ov-cel-accent, #fcd34d); color: var(--ov-cel-ink, #111);
+  font-weight: 900; font-size: 24px; letter-spacing: 8px; }
+.ov-cel-nm { margin-top: 14px; font-weight: 900; font-size: 50px; line-height: 1.1; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ov-cel-to { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 10px; font-weight: 800; font-size: 24px; letter-spacing: 2px; text-transform: uppercase; }
+.ov-cel-to img { width: 62px; height: 62px; border-radius: 50%; background: #fff; padding: 5px; object-fit: contain; }
+.ov-cel-price { margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(255, 255, 255, .2); }
+.ov-cel-price small { display: block; font-size: 16px; font-weight: 800; letter-spacing: 6px; opacity: .75; }
+.ov-cel-price div { margin-top: 6px; font-weight: 900; font-size: 80px; line-height: 1; font-variant-numeric: tabular-nums; color: var(--ov-cel-accent, #fcd34d); }
+.ov-confetti i { position: absolute; top: -40px; left: var(--x); width: 14px; height: 24px; border-radius: 3px; background: var(--c);
+  animation: ov-fall var(--t) linear var(--d) infinite; }
+@keyframes ov-fall { to { transform: translate(var(--dx), 1180px) rotate(900deg); } }
+
+/* Supply context: Available / Sold / Unsold counts. Templates restyle as needed. */
+.ov-stats { display: flex; gap: 8px; }
+.ov-stats > span { display: flex; align-items: center; gap: 8px; height: 34px; padding: 0 14px; border-radius: 6px; background: rgba(0, 0, 0, .6);
+  font: 700 13px/1 var(--ov-stats-font, "Montserrat", sans-serif); letter-spacing: 2px; text-transform: uppercase; color: rgba(255, 255, 255, .78); white-space: nowrap; }
+.ov-stats b { font-size: 20px; letter-spacing: 0; color: #fff; }
+.ov-stats .s b { color: #4ade80; }
+.ov-stats .u b { color: #f87171; }
+
+/* Every new bid flashes the whole bid block ([data-pulse]), not just the digits. */
+.aa-pulse { animation: ov-pulse .7s ease-out; }
+@keyframes ov-pulse { 0% { filter: brightness(1.8) saturate(1.3); } 100% { filter: none; } }

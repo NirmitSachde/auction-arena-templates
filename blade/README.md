@@ -8,7 +8,8 @@ Each view is self-contained: it `@extends('frontend.layout.blank-layout')`, inli
 
 - Drop-in replacements for the current YouTube overlay view. They use the same variables (`$tournament`, `$player`, `$basePrice`, `$tournament->latestActiveBiddingStatus`) and the same Echo channel and events (`player-change-event`, `bid-placed`, `bid-undo`, `player-sold`, `player-unsold`, `auction-finished`).
 - The body is transparent. In OBS, add a Browser Source at 1920x1080 pointing at the route.
-- SOLD / UNSOLD shows the stamp and top strip for 8 seconds, then resets to WAITING..., the same as the current overlay.
+- SOLD / UNSOLD shows the stamp and top strip for 8 seconds, then resets to WAITING..., the same as the current overlay. SOLD also shows a celebration card with confetti for those 8 seconds.
+- Sold / Unsold / Available counts come from the data block. On `player-sold` or `player-unsold` they move by one in the browser (sold or unsold +1, available -1). On a page refresh they reload from the server.
 - If a team has a colour column, send it as `team.color` on `bid-placed` and map it in `tools/blade/overlay-data.blade.php`. Overlays 03 and 06 recolour to the bidding team; the default is `#e11d48`.
 
 ## player-card/ (story cards)
@@ -25,6 +26,7 @@ Lines marked `CHECK` in `tools/blade/overlay-data.blade.php` and `tools/blade/st
 | --- | --- |
 | Tournament logo | `$tournament->tournament_image` |
 | Team colour | `$team->color` (optional) |
+| Overlay counts | `$availableCount`, `$soldCount`, `$unsoldCount` |
 | Story: buying team | `$team` |
 | Story: sold price (points) | `$soldPrice` |
 | Story: base price | `$basePrice` |

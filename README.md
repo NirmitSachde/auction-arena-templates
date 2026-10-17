@@ -29,7 +29,7 @@ Run locally by opening `index.html` in any modern browser. MIT licensed.
 - `shared/data.js`: the one live payload (tournament, sponsor, player, stats, status counts, bid, team). Every template reads only from this.
 - `shared/aa.js`: fills `data-bind` / `data-src` fields, renders stats, scales the canvas, pulses values when they change. Call `AA.update({ bid: { amount: "1.50" } })` from the real backend.
 - `shared/base.css`: reset + the 1920x1080 stage.
-- `shared/overlay.css`: transparent page, SOLD / UNSOLD strip and stamp. Add `?preview` to an overlay URL (or press B) for a sample camera frame behind it.
+- `shared/overlay.css`: transparent page, SOLD / UNSOLD strip and stamp, SOLD celebration card, count chips, bid pulse. Add `?preview` to an overlay URL (or press B) for a sample camera frame behind it.
 - `shared/story.css` + `shared/story.js`: the 1080x1920 stage, one-line name fitting and the html2canvas PNG download.
 - Demo keys: SPACE or → raises the bid, T switches the bidding team, S / U / L set sold / unsold / live.
 - Open `index.html` for the gallery.
@@ -55,7 +55,7 @@ Run locally by opening `index.html` in any modern browser. MIT licensed.
 
 ## Live overlays
 
-Each one keeps the centre of the frame clear for the camera.
+Each one keeps the centre of the frame clear for the camera. All six show Sold / Unsold / Available counts, flash the bid block on every new bid, and on SOLD put up a centred celebration card with confetti, the buying team and the price. These features came from a study of a real CCL 2026 auction stream: [docs/research-yt-ccl-2026.md](docs/research-yt-ccl-2026.md).
 
 1. **Royal Ribbon**: IPL-style navy and gold lower third; the photo medallion breaks out of the ribbon, with a gold bid plate and a white team roundel.
 2. **Glass Dock**: one floating frosted pill at the bottom, monochrome with a lime live bid.
